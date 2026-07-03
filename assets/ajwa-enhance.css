@@ -182,6 +182,9 @@ html.ajwa-enh .common-section{padding-top:96px !important;padding-bottom:96px !i
   color:#6b5d51;transition:color .28s ease;
 }
 .ajwa-langtoggle a.active{color:#fff;}
+/* Sitenin .language-select-area / .hamburger-menu a kuralları segment stilini ezmesin */
+html.ajwa-enh .ajwa-langtoggle a{color:#6b5d51 !important;background:none !important;border:0 !important;text-decoration:none !important;text-shadow:none !important;}
+html.ajwa-enh .ajwa-langtoggle a.active{color:#fff !important;}
 .ajwa-langtoggle__thumb{
   position:absolute;z-index:1;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);
   border-radius:999px;background:var(--ajwa-brown);box-shadow:0 2px 8px rgba(56,43,37,.32);

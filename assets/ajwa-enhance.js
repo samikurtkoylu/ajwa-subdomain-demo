@@ -67,25 +67,18 @@
     var old = doc.querySelector(".ajwa-band");
     var hero = doc.querySelector(".homepage-banner-wrapper, .homepage-banner");
     if (!hero) return;
-    var telHref = cfg.phone ? "tel:" + cfg.phone.replace(/[^\d+]/g, "") : null;
-    var waHref = cfg.phone ? "https://wa.me/" + cfg.phone.replace(/[^\d]/g, "") : null;
     var awardsHtml = (cfg.awards || []).map(function (a) { return '<span class="ajwa-award">' + esc(a) + "</span>"; }).join("");
     var ratingHtml = cfg.rating
       ? '<span class="ajwa-rating"><span class="ajwa-stars" aria-hidden="true">★★★★★</span><b>' + esc(cfg.rating) + "</b>/5 " + esc(cfg.ratingLabel || "") + "<sup>örnek</sup></span>"
       : "";
     var h1inner = cfg.h1html ? cfg.h1html : esc(cfg.h1 || cfg.hotel || "AJWA Hotels");
     var h1class = cfg.h1html ? ' class="ajwa-artisan-h1"' : "";
-    var ctaHtml =
-      '<a class="ajwa-btn ajwa-btn--gold" href="#" role="button" onclick="var b=document.getElementById(\'ucHeader_divBookButton\');if(b){b.click();return false;}">' + ICON.cal + (cfg.lang === "tr" ? "Rezervasyon Yap" : "Book Your Stay") + "</a>" +
-      (telHref ? '<a class="ajwa-btn ajwa-btn--primary" href="' + telHref + '">' + ICON.phone + (cfg.lang === "tr" ? "Ara" : "Call") + "</a>" : "") +
-      (waHref ? '<a class="ajwa-btn ajwa-btn--ghost" href="' + waHref + '" target="_blank" rel="noopener">' + ICON.wa + "WhatsApp</a>" : "");
     var node = el(
       '<section class="ajwa-band ajwa-enh-el" aria-label="' + esc(cfg.hotel || "AJWA") + '">' +
       (cfg.eyebrow ? '<p class="ajwa-band__eyebrow">' + esc(cfg.eyebrow) + "</p>" : "") +
       "<h1" + h1class + ">" + h1inner + "</h1>" +
       (cfg.tag ? '<p class="ajwa-band__tag">' + esc(cfg.tag) + "</p>" : "") +
       '<div class="ajwa-trust">' + ratingHtml + '<span class="ajwa-awards">' + awardsHtml + "</span></div>" +
-      '<div class="ajwa-cta-row">' + ctaHtml + "</div>" +
       "</section>"
     );
     if (old) old.parentNode.replaceChild(node, old);

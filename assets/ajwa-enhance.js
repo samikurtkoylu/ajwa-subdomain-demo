@@ -87,39 +87,69 @@
 
   /* ---- Konaklama: scroll-reveal + hover alt kategoriler + arka plan görsel değişimi ---- */
   var ACC_IMG = "assets/img/accommodation/";
-  var ACC_URL = {
-    rooms: { en: "https://www.ajwa.com.tr/sultanahmet/accommodation/rooms.4.aspx", tr: "https://www.ajwa.com.tr/sultanahmet/konaklama/odalar.4.aspx" },
-    suites: { en: "https://www.ajwa.com.tr/sultanahmet/accommodation/suites.5.aspx", tr: "https://www.ajwa.com.tr/sultanahmet/konaklama/suitler.5.aspx" }
+  var SA = "https://www.ajwa.com.tr/sultanahmet/", CP = "https://www.ajwa.com.tr/cappadocia/";
+  var ACC = {
+    sultanahmet: {
+      en: { eyebrow: "ACCOMMODATION", heading: "Rooms & suites, each a quiet work of craft", defaultBg: "suite-pano.jpg",
+        groups: [
+          { key: "rooms", label: "Rooms", url: SA + "accommodation/rooms.4.aspx", bg: "room-deluxe.jpg", items: [
+            { name: "Deluxe Room", img: "room-deluxe.jpg" }] },
+          { key: "suites", label: "Suites", url: SA + "accommodation/suites.5.aspx", bg: "suite-corner.jpg", items: [
+            { name: "Family Suite", img: "suite-family.jpg" }, { name: "Corner Suite", img: "suite-corner.jpg" }, { name: "Sultan Suite", img: "suite-sultan.jpg" }] }
+        ] },
+      tr: { eyebrow: "KONAKLAMA", heading: "Her biri sessiz bir zanaat: odalar ve süitler", defaultBg: "suite-pano.jpg",
+        groups: [
+          { key: "rooms", label: "Odalar", url: SA + "konaklama/odalar.4.aspx", bg: "room-deluxe.jpg", items: [
+            { name: "Delüks Oda", img: "room-deluxe.jpg" }] },
+          { key: "suites", label: "Süitler", url: SA + "konaklama/suitler.5.aspx", bg: "suite-corner.jpg", items: [
+            { name: "Aile Süiti", img: "suite-family.jpg" }, { name: "Köşe Süit", img: "suite-corner.jpg" }, { name: "Sultan Süiti", img: "suite-sultan.jpg" }] }
+        ] }
+    },
+    cappadocia: {
+      en: { eyebrow: "ACCOMMODATION", heading: "Rooms & cave suites, carved into Cappadocia", defaultBg: "cave-kilicarslan.jpg",
+        groups: [
+          { key: "rooms", label: "Rooms", url: CP + "accommodation/hotel-rooms.2.aspx", bg: "room-kervansaray-deluxe.jpg", items: [
+            { name: "Kervansaray Deluxe Room", img: "room-kervansaray-deluxe.jpg" },
+            { name: "Kervansaray Superior Room", img: "room-kervansaray-superior.jpg" },
+            { name: "Sakura Deluxe Room", img: "room-sakura-deluxe.jpg" },
+            { name: "Sakura Superior Room", img: "room-sakura-superior.jpg" }] },
+          { key: "suites", label: "Cave Suites", url: CP + "accommodation/cave-suites.3.aspx", bg: "cave-kilicarslan.jpg", items: [
+            { name: "Kılıç Arslan Cave Suite", img: "cave-kilicarslan.jpg" },
+            { name: "Danişmend Gazi Cave Suite", img: "cave-danismend.jpg" },
+            { name: "Karamanoğlu İbrahim Cave Suite", img: "cave-karamanoglu.jpg" },
+            { name: "Alaeddin Ali Bey Cave Suite", img: "cave-alaeddin.jpg" },
+            { name: "Nevşehirli Damat İbrahim Paşa Cave Suite", img: "cave-nevsehirli.jpg" }] }
+        ] },
+      tr: { eyebrow: "KONAKLAMA", heading: "Kapadokya'ya oyulmuş odalar ve mağara suitler", defaultBg: "cave-kilicarslan.jpg",
+        groups: [
+          { key: "rooms", label: "Odalar", url: CP + "konaklama/odalar.2.aspx", bg: "room-kervansaray-deluxe.jpg", items: [
+            { name: "Kervansaray Delüks Oda", img: "room-kervansaray-deluxe.jpg" },
+            { name: "Kervansaray Superior Oda", img: "room-kervansaray-superior.jpg" },
+            { name: "Sakura Delüks Oda", img: "room-sakura-deluxe.jpg" },
+            { name: "Sakura Superior Oda", img: "room-sakura-superior.jpg" }] },
+          { key: "suites", label: "Mağara Suitler", url: CP + "konaklama/magara-suitler.3.aspx", bg: "cave-kilicarslan.jpg", items: [
+            { name: "Kılıç Arslan Mağara Süit", img: "cave-kilicarslan.jpg" },
+            { name: "Danişmend Gazi Mağara Süit", img: "cave-danismend.jpg" },
+            { name: "Karamanoğlu İbrahim Mağara Süit", img: "cave-karamanoglu.jpg" },
+            { name: "Alaeddin Ali Bey Mağara Süit", img: "cave-alaeddin.jpg" },
+            { name: "Nevşehirli Damat İbrahim Paşa Mağara Süit", img: "cave-nevsehirli.jpg" }] }
+        ] }
+    }
   };
-  var ACC_DATA = {
-    en: { eyebrow: "ACCOMMODATION", heading: "Rooms & suites, each a quiet work of craft", defaultBg: "suite-pano.jpg",
-      groups: [
-        { key: "rooms", label: "Rooms", url: ACC_URL.rooms.en, bg: "room-deluxe.jpg", items: [{ name: "Deluxe Room", img: "room-deluxe.jpg", url: ACC_URL.rooms.en }] },
-        { key: "suites", label: "Suites", url: ACC_URL.suites.en, bg: "suite-corner.jpg", items: [
-          { name: "Family Suite", img: "suite-family.jpg", url: ACC_URL.suites.en },
-          { name: "Corner Suite", img: "suite-corner.jpg", url: ACC_URL.suites.en },
-          { name: "Sultan Suite", img: "suite-sultan.jpg", url: ACC_URL.suites.en }] }
-      ] },
-    tr: { eyebrow: "KONAKLAMA", heading: "Her biri sessiz bir zanaat: odalar ve süitler", defaultBg: "suite-pano.jpg",
-      groups: [
-        { key: "rooms", label: "Odalar", url: ACC_URL.rooms.tr, bg: "room-deluxe.jpg", items: [{ name: "Delüks Oda", img: "room-deluxe.jpg", url: ACC_URL.rooms.tr }] },
-        { key: "suites", label: "Süitler", url: ACC_URL.suites.tr, bg: "suite-corner.jpg", items: [
-          { name: "Aile Süiti", img: "suite-family.jpg", url: ACC_URL.suites.tr },
-          { name: "Köşe Süit", img: "suite-corner.jpg", url: ACC_URL.suites.tr },
-          { name: "Sultan Süiti", img: "suite-sultan.jpg", url: ACC_URL.suites.tr }] }
-      ] }
-  };
-  function isSultanahmetMain() {
-    return CFG.hotel === "AJWA Sultanahmet" && /\/sultanahmet\//.test(location.pathname) &&
-      /(index|anasayfa)\.html$/.test(location.pathname) && !!doc.querySelector(".homepage-banner-wrapper, .homepage-banner");
+  function currentHotelKey() {
+    if (!/(index|anasayfa)\.html$/.test(location.pathname)) return null;
+    if (CFG.hotel === "AJWA Sultanahmet" && /\/sultanahmet\//.test(location.pathname)) return "sultanahmet";
+    if (CFG.hotel === "AJWA Cappadocia" && /\/cappadocia\//.test(location.pathname)) return "cappadocia";
+    return null;
   }
   function accommodation(lang) {
-    if (!isSultanahmetMain()) return;
-    var data = ACC_DATA[lang] || ACC_DATA.en;
+    var hk = currentHotelKey();
+    if (!hk || !doc.querySelector(".homepage-banner-wrapper, .homepage-banner")) return;
+    var data = ACC[hk][lang] || ACC[hk].en;
     var old = doc.querySelector(".ajwa-acc");
     var groupHtml = data.groups.map(function (g) {
       var subs = g.items.map(function (it) {
-        return '<li><a class="ajwa-acc__sub" href="' + it.url + '" data-img="' + it.img + '">' + esc(it.name) + "</a></li>";
+        return '<li><a class="ajwa-acc__sub" href="' + g.url + '" data-img="' + it.img + '">' + esc(it.name) + "</a></li>";
       }).join("");
       return '<div class="ajwa-acc__group" data-group="' + g.key + '" data-bg="' + g.bg + '" tabindex="0" role="button" aria-label="' + esc(g.label) + '">' +
         '<a class="ajwa-acc__label-link" href="' + g.url + '"><span class="ajwa-acc__label">' + esc(g.label) + "</span></a>" +

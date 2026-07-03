@@ -54,13 +54,15 @@ PAGES = {
 
     # cappadocia
     "cappadocia/index.html": dict(lang="en", hotel="AJWA Cappadocia", phone="+90 384 352 12 12",
-        eyebrow="Cave Suites & Luxury · Cappadocia",
-        h1="AJWA Cappadocia — Cave Suites & Luxury in the Heart of Cappadocia",
+        eyebrow="Artisanal Luxury · Cappadocia",
+        h1="AJWA Cappadocia — Cave-Suite Luxury in Cappadocia",
+        h1html='<span class="l1">AJWA Cappadocia</span><span class="l3">Cave-Suite Luxury in Cappadocia</span>',
         tag="Hand-carved cave suites and panoramic terraces above the fairy chimneys of Cappadocia.",
         rating="4.8", ratingLabel="guest rating", awards=[PREFERRED, FHR]),
     "cappadocia/anasayfa.html": dict(lang="tr", hotel="AJWA Cappadocia", phone="+90 384 352 12 12",
-        eyebrow="Mağara Suitler & Lüks · Kapadokya",
-        h1="AJWA Cappadocia — Kapadokya'nın Kalbinde Mağara Suitler & Lüks",
+        eyebrow="Sanatsal Lüks · Kapadokya",
+        h1="AJWA Cappadocia — Kapadokya'da Mağara-Suit Lüksü",
+        h1html="<span class='l1'>AJWA Cappadocia</span><span class='l3'>Kapadokya'da Mağara-Suit Lüksü</span>",
         tag="El oyması mağara suitler ve peribacalarına bakan panoramik teraslar.",
         rating="4.8", ratingLabel="misafir puanı", awards=[PREFERRED, FHR]),
 }

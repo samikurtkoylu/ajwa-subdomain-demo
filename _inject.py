@@ -28,13 +28,15 @@ PAGES = {
 
     # sultanahmet
     "sultanahmet/index.html": dict(lang="en", hotel="AJWA Sultanahmet", phone="+90 212 638 22 00",
-        eyebrow="A Luxury Boutique Hotel · Historic Istanbul",
-        h1="AJWA Sultanahmet — Luxury Boutique Hotel in Historic Istanbul",
+        eyebrow="Artisanal Luxury · Historic Istanbul",
+        h1="AJWA Sultanahmet — A Luxury Hotel in Historic Istanbul",
+        h1html='<span class="l1">AJWA Sultanahmet</span><span class="l3">A Luxury Hotel in Historic Istanbul</span>',
         tag="In the heart of Istanbul's old city, steps from Hagia Sophia and the Blue Mosque.",
         rating="4.8", ratingLabel="guest rating", awards=[MICHELIN, PREFERRED, FHR]),
     "sultanahmet/anasayfa.html": dict(lang="tr", hotel="AJWA Sultanahmet", phone="+90 212 638 22 00",
-        eyebrow="Lüks Butik Otel · Tarihi İstanbul",
-        h1="AJWA Sultanahmet — Tarihi İstanbul'da Lüks Butik Otel",
+        eyebrow="Sanatsal Lüks · Tarihi İstanbul",
+        h1="AJWA Sultanahmet — Tarihi İstanbul'da Lüks Otel",
+        h1html="<span class='l1'>AJWA Sultanahmet</span><span class='l3'>Tarihi İstanbul'da Lüks Otel</span>",
         tag="İstanbul'un tarihi yarımadasının kalbinde, Ayasofya ve Sultanahmet Camii'ne birkaç adım.",
         rating="4.8", ratingLabel="misafir puanı", awards=[MICHELIN, PREFERRED, FHR]),
 

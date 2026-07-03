@@ -12,6 +12,7 @@
   --ajwa-brown:#382b25;
   --ajwa-brown-warm:#7c5a2f;
   --ajwa-cream:#f6f1e9;
+  --ajwa-beige:#efe6d5;   /* sitenin sıcak paletine uygun net bej (gold ailesi) */
 }
 
 .ajwa-enh-el{display:none !important;}
@@ -125,8 +126,8 @@ html.ajwa-enh.ajwa-i18n-fade .ajwa-i18n-el,
 html.ajwa-enh.ajwa-i18n-fade .ajwa-band{opacity:0;}
 .ajwa-langtoggle{
   position:relative;display:inline-flex;align-items:stretch;
-  background:#fff;border:1px solid #e2d6c3;border-radius:999px;padding:4px;
-  box-shadow:0 2px 10px rgba(56,43,37,.1);
+  background:var(--ajwa-beige);border:1px solid #ded0b8;border-radius:999px;padding:4px;
+  box-shadow:0 2px 10px rgba(56,43,37,.14);
 }
 .ajwa-langtoggle a{
   position:relative;z-index:2;flex:1 1 0;min-width:56px;

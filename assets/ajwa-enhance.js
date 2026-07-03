@@ -135,10 +135,23 @@
         '<div class="ajwa-acc__groups">' + groupHtml + "</div>" +
       "</div></section>"
     );
-    var anchor = doc.querySelector(".ajwa-band") || doc.querySelector(".homepage-banner-wrapper, .homepage-banner");
-    if (old) old.parentNode.replaceChild(section, old);
-    else if (anchor) anchor.insertAdjacentElement("afterend", section);
-    else return;
+    if (old) {
+      old.parentNode.replaceChild(section, old);
+    } else {
+      // eski konaklama bölümünün (.roomTab) yerine koy; yoksa band'dan sonra
+      var oldTab = null;
+      doc.querySelectorAll(".roomTab").forEach(function (t) { if (!oldTab && !t.closest(".booking-modal")) oldTab = t; });
+      if (oldTab) {
+        oldTab.parentNode.insertBefore(section, oldTab);
+      } else {
+        var anchor = doc.querySelector(".ajwa-band") || doc.querySelector(".homepage-banner-wrapper, .homepage-banner");
+        if (anchor) anchor.insertAdjacentElement("afterend", section); else return;
+      }
+    }
+    // eski oda/süit bölümünü gizle (booking-modal içindekiler hariç)
+    doc.querySelectorAll(".roomTab, .room-slider-wrapper").forEach(function (s) {
+      if (!s.closest(".booking-modal")) s.style.display = "none";
+    });
 
     var layers = section.querySelectorAll(".ajwa-acc__bg"), cur = 0;
     function setBg(img) {

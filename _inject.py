@@ -17,13 +17,13 @@ PAGES = {
         eyebrow="Artisanal Luxury · Istanbul & Cappadocia",
         h1="Artisanal Luxury Hotels in Istanbul & Cappadocia",
         h1html='<span class="l1">Artisanal Luxury Hotels</span><span class="l2">in</span><span class="l3">Istanbul &amp; Cappadocia</span>',
-        tag="Two artisanal gems — a historic boutique hotel in Sultanahmet and cave-suite luxury in Cappadocia.",
+        tag="Two extraordinary landscapes, one signature of elegance: AJWA.",
         rating="4.8", ratingLabel="guest rating", awards=[MICHELIN, PREFERRED, FHR]),
     "anasayfa.html": dict(lang="tr", hotel="AJWA Otelleri", phone="+90 212 638 22 00",
         eyebrow="Sanatsal Lüks · İstanbul & Kapadokya",
         h1="İstanbul ve Kapadokya'da Sanatsal Lüks Oteller",
         h1html='<span class="l1">Sanatsal Lüks Oteller</span><span class="l2">·</span><span class="l3">İstanbul &amp; Kapadokya</span>',
-        tag="İki sanatsal mücevher — Sultanahmet'te tarihi bir butik otel ve Kapadokya'da mağara-suit lüksü.",
+        tag="İki benzersiz coğrafya, tek bir zarafet imzası: AJWA.",
         rating="4.8", ratingLabel="misafir puanı", awards=[MICHELIN, PREFERRED, FHR]),
 
     # sultanahmet

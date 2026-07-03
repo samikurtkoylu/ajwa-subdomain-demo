@@ -108,9 +108,19 @@ html.ajwa-enh .book-now-button .line2{font-weight:700 !important;letter-spacing:
 /* ---------- Dil değiştirici: 21st.dev tarzı segmented EN|TR (kayan thumb) ---------- */
 html.ajwa-enh .language-select-area{text-align:center;}
 html.ajwa-enh a.ajwa-enh-hide-orig{display:none !important;}
-/* gateway sağ üst görünür dil menüsü içindeki toggle */
+/* gateway sağ üst görünür dil menüsü: eski kutu çerçevesini kaldır, sadece pill kalsın */
+html.ajwa-enh #ucHeader_divHomeDisplayMenu{
+  background:transparent !important;border:0 !important;border-radius:0 !important;box-shadow:none !important;padding:0 !important;
+}
 html.ajwa-enh #ucHeader_divHomeDisplayMenu .ajwa-langtoggle{margin:0;}
-html.ajwa-enh #ucHeader_divHomeDisplayMenu ul{margin:0;padding:0;list-style:none;}
+html.ajwa-enh #ucHeader_divHomeDisplayMenu ul{margin:0;padding:0;list-style:none;background:transparent !important;border:0 !important;}
+html.ajwa-enh #ucHeader_divHomeDisplayMenu li{background:transparent !important;border:0 !important;}
+
+/* ---------- in-place dil değişimi: cross-fade ---------- */
+html.ajwa-enh .ajwa-i18n-el,
+html.ajwa-enh .ajwa-band{transition:opacity .25s ease;}
+html.ajwa-enh.ajwa-i18n-fade .ajwa-i18n-el,
+html.ajwa-enh.ajwa-i18n-fade .ajwa-band{opacity:0;}
 .ajwa-langtoggle{
   position:relative;display:inline-flex;align-items:stretch;
   background:#fff;border:1px solid #e2d6c3;border-radius:999px;padding:4px;

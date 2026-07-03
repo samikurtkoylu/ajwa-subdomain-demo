@@ -1,6 +1,6 @@
 /* ============================================================
    AJWA Hotels — Front-End İyileştirme Katmanı (SHOWCASE) — JS
-   Progressive enhancement: mevcut markup'ı bozmadan üstüne ekler.
+   Progressive enhancement + in-place dil değişimi (reload'suz, cross-fade)
    Per-sayfa yapılandırma: window.AJWA_ENH_CFG (injector yazar)
    ============================================================ */
 (function () {
@@ -61,42 +61,38 @@
     rail.appendChild(box);
   }
 
-  /* ---- A1 + B7: hero-altı marka & güven bandı ---- */
-  function band() {
-    if (doc.querySelector(".ajwa-band")) return;
+  /* ---- A1 + B7: hero-altı marka & güven bandı (dil değişince yeniden kurulur) ---- */
+  function band(cfg) {
+    cfg = cfg || CFG;
+    var old = doc.querySelector(".ajwa-band");
     var hero = doc.querySelector(".homepage-banner-wrapper, .homepage-banner");
     if (!hero) return;
-    var telHref = CFG.phone ? "tel:" + CFG.phone.replace(/[^\d+]/g, "") : null;
-    var waHref = CFG.phone ? "https://wa.me/" + CFG.phone.replace(/[^\d]/g, "") : null;
-
-    var awardsHtml = (CFG.awards || []).map(function (a) { return '<span class="ajwa-award">' + esc(a) + "</span>"; }).join("");
-    var ratingHtml = CFG.rating
-      ? '<span class="ajwa-rating"><span class="ajwa-stars" aria-hidden="true">★★★★★</span><b>' + esc(CFG.rating) + "</b>/5 " + esc(CFG.ratingLabel || "") + "<sup>örnek</sup></span>"
+    var telHref = cfg.phone ? "tel:" + cfg.phone.replace(/[^\d+]/g, "") : null;
+    var waHref = cfg.phone ? "https://wa.me/" + cfg.phone.replace(/[^\d]/g, "") : null;
+    var awardsHtml = (cfg.awards || []).map(function (a) { return '<span class="ajwa-award">' + esc(a) + "</span>"; }).join("");
+    var ratingHtml = cfg.rating
+      ? '<span class="ajwa-rating"><span class="ajwa-stars" aria-hidden="true">★★★★★</span><b>' + esc(cfg.rating) + "</b>/5 " + esc(cfg.ratingLabel || "") + "<sup>örnek</sup></span>"
       : "";
-    var h1inner = CFG.h1html ? CFG.h1html : esc(CFG.h1 || CFG.hotel || "AJWA Hotels");
-    var h1class = CFG.h1html ? ' class="ajwa-artisan-h1"' : "";
-
+    var h1inner = cfg.h1html ? cfg.h1html : esc(cfg.h1 || cfg.hotel || "AJWA Hotels");
+    var h1class = cfg.h1html ? ' class="ajwa-artisan-h1"' : "";
     var ctaHtml =
-      '<a class="ajwa-btn ajwa-btn--gold" href="#" role="button" onclick="var b=document.getElementById(\'ucHeader_divBookButton\');if(b){b.click();return false;}">' + ICON.cal + (CFG.lang === "tr" ? "Rezervasyon Yap" : "Book Your Stay") + "</a>" +
-      (telHref ? '<a class="ajwa-btn ajwa-btn--primary" href="' + telHref + '">' + ICON.phone + (CFG.lang === "tr" ? "Ara" : "Call") + "</a>" : "") +
+      '<a class="ajwa-btn ajwa-btn--gold" href="#" role="button" onclick="var b=document.getElementById(\'ucHeader_divBookButton\');if(b){b.click();return false;}">' + ICON.cal + (cfg.lang === "tr" ? "Rezervasyon Yap" : "Book Your Stay") + "</a>" +
+      (telHref ? '<a class="ajwa-btn ajwa-btn--primary" href="' + telHref + '">' + ICON.phone + (cfg.lang === "tr" ? "Ara" : "Call") + "</a>" : "") +
       (waHref ? '<a class="ajwa-btn ajwa-btn--ghost" href="' + waHref + '" target="_blank" rel="noopener">' + ICON.wa + "WhatsApp</a>" : "");
-
-    var band = el(
-      '<section class="ajwa-band ajwa-enh-el" aria-label="' + esc(CFG.hotel || "AJWA") + '">' +
-      (CFG.eyebrow ? '<p class="ajwa-band__eyebrow">' + esc(CFG.eyebrow) + "</p>" : "") +
+    var node = el(
+      '<section class="ajwa-band ajwa-enh-el" aria-label="' + esc(cfg.hotel || "AJWA") + '">' +
+      (cfg.eyebrow ? '<p class="ajwa-band__eyebrow">' + esc(cfg.eyebrow) + "</p>" : "") +
       "<h1" + h1class + ">" + h1inner + "</h1>" +
-      (CFG.tag ? '<p class="ajwa-band__tag">' + esc(CFG.tag) + "</p>" : "") +
+      (cfg.tag ? '<p class="ajwa-band__tag">' + esc(cfg.tag) + "</p>" : "") +
       '<div class="ajwa-trust">' + ratingHtml + '<span class="ajwa-awards">' + awardsHtml + "</span></div>" +
       '<div class="ajwa-cta-row">' + ctaHtml + "</div>" +
       "</section>"
     );
-    hero.insertAdjacentElement("afterend", band);
+    if (old) old.parentNode.replaceChild(node, old);
+    else hero.insertAdjacentElement("afterend", node);
   }
 
-  /* ---- Dil değiştirici: segmented EN|TR (21st.dev tarzı, kayan thumb) ----
-     İki yeri de kapsar:
-       .language-select-area  (hamburger menü içinde, iki link EN+TR)
-       #ucHeader_divHomeDisplayMenu.defaultMenu (gateway sağ üst, görünür, tek "diğer dil" linki) */
+  /* ---- Dil değiştirici: segmented EN|TR (kayan thumb) + in-place değişim ---- */
   function isLangLink(a) {
     var t = (a.textContent || "").toUpperCase().trim(), h = a.getAttribute("href") || "";
     return /ENGLISH|T[UÜ]RK[CÇ]E|^EN$|^TR$/.test(t) || /(index|anasayfa|ajwa-homes|ajwa-evleri)\.html/i.test(h);
@@ -113,7 +109,6 @@
       if (t.indexOf("ENGLISH") > -1 || t.trim() === "EN" || /(index|ajwa-homes)\.html/i.test(h)) enHref = h;
       else if (t.indexOf("TÜRK") > -1 || t.indexOf("TURK") > -1 || t.trim() === "TR" || /(anasayfa|ajwa-evleri)\.html/i.test(h)) trHref = h;
     });
-    // eksik olan (mevcut dil) linkini kendi sayfasıyla tamamla
     if (curLang === "en" && !enHref) enHref = curFile;
     if (curLang === "tr" && !trHref) trHref = curFile;
     if (!enHref || !trHref) return;
@@ -121,7 +116,7 @@
     var enActive = curLang === "en";
     function seg(code, href, active) {
       return '<a href="' + href.replace(/:443(?=\/|$)/, "") + '"' + (active ? ' class="active" aria-current="true"' : "") +
-        ' lang="' + (code === "EN" ? "en" : "tr") + '">' + code + "</a>";
+        ' data-lang="' + (code === "EN" ? "en" : "tr") + '" lang="' + (code === "EN" ? "en" : "tr") + '">' + code + "</a>";
     }
     var wrap = el(
       '<div class="ajwa-langtoggle ajwa-enh-el" role="group" aria-label="Dil / Language" data-active="' + (enActive ? "0" : "1") + '">' +
@@ -129,6 +124,13 @@
       seg("EN", enHref, enActive) + seg("TR", trHref, !enActive) +
       "</div>"
     );
+    wrap.querySelectorAll("a[data-lang]").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey) return; // yeni sekme vб. bırak
+        e.preventDefault();
+        switchLang(a.getAttribute("data-lang"));
+      });
+    });
     links.forEach(function (a) { a.classList.add("ajwa-enh-hide-orig"); });
     area.appendChild(wrap);
   }
@@ -136,8 +138,113 @@
     doc.querySelectorAll(".language-select-area").forEach(buildToggle);
     buildToggle(doc.getElementById("ucHeader_divHomeDisplayMenu"));
   }
+  function updateToggles(lang) {
+    doc.querySelectorAll(".ajwa-langtoggle").forEach(function (t) {
+      t.setAttribute("data-active", lang === "en" ? "0" : "1");
+      t.querySelectorAll("a[data-lang]").forEach(function (a) {
+        var on = a.getAttribute("data-lang") === lang;
+        a.classList.toggle("active", on);
+        if (on) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+      });
+    });
+  }
 
-  /* ---- Lenis smooth scroll (vendor: assets/lenis.min.js) ---- */
+  /* ==================== in-place i18n motoru ==================== */
+  var SKIP_I18N = ".ajwa-band,.ajwa-langtoggle,.ajwa-quick-contact,.ajwa-toggle,.ajwa-skip";
+  var I18N = { nodes: [], cfgs: {}, title: {}, url: {}, built: false, building: null, cur: (CFG.lang === "tr" ? "tr" : "en") };
+
+  function sigOf(node, stop) {
+    var parts = [];
+    while (node && node.nodeType === 1 && node !== stop) {
+      var tag = node.tagName, i = 0, s = node;
+      while ((s = s.previousElementSibling)) { if (s.tagName === tag) i++; }
+      parts.push(tag + i); node = node.parentElement;
+    }
+    return parts.reverse().join(">");
+  }
+  function collectText(docCtx, rootBody) {
+    var res = [], seen = {};
+    var w = docCtx.createTreeWalker(rootBody, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        var t = n.nodeValue.replace(/\s+/g, " ").trim(); if (!t) return 2;
+        var p = n.parentElement; if (!p) return 2;
+        var tag = p.tagName.toLowerCase();
+        if (tag === "script" || tag === "style" || tag === "noscript" || tag === "title") return 2;
+        if (p.closest && p.closest(SKIP_I18N)) return 2;
+        return 1;
+      }
+    });
+    var n;
+    while ((n = w.nextNode())) {
+      var p = n.parentElement, base = sigOf(p, rootBody);
+      var idx = (seen[base] = (seen[base] || 0) + 1);
+      res.push({ node: n, key: base + "|" + idx, text: n.nodeValue.replace(/\s+/g, " ").trim() });
+    }
+    return res;
+  }
+  function counterpartUrl() {
+    var t = doc.querySelector('.ajwa-langtoggle a[data-lang="' + (I18N.cur === "en" ? "tr" : "en") + '"]');
+    return t ? t.getAttribute("href") : null;
+  }
+  function buildI18n() {
+    if (I18N.built) return Promise.resolve(true);
+    if (I18N.building) return I18N.building;
+    var url = counterpartUrl();
+    if (!url) return Promise.resolve(false);
+    var other = I18N.cur === "en" ? "tr" : "en";
+    I18N.building = fetch(url).then(function (r) { return r.text(); }).then(function (html) {
+      var d2 = new DOMParser().parseFromString(html, "text/html");
+      I18N.cfgs[I18N.cur] = CFG;
+      var m = html.match(/window\.AJWA_ENH_CFG\s*=\s*(\{[\s\S]*?\})\s*;/);
+      if (m) { try { I18N.cfgs[other] = JSON.parse(m[1]); } catch (e) { I18N.cfgs[other] = CFG; } }
+      I18N.title[I18N.cur] = document.title;
+      var t2 = d2.querySelector("title"); if (t2) I18N.title[other] = t2.textContent;
+      I18N.url[I18N.cur] = location.pathname.split("/").pop() || "index.html";
+      I18N.url[other] = url;
+      var otherMap = {};
+      collectText(d2, d2.body).forEach(function (o) { if (!(o.key in otherMap)) otherMap[o.key] = o.text; });
+      collectText(document, doc.body).forEach(function (l) {
+        if (l.key in otherMap && otherMap[l.key] !== "") {
+          var pair = {}; pair[I18N.cur] = l.text; pair[other] = otherMap[l.key];
+          l.node.__i18n = pair;
+          if (l.node.parentElement) l.node.parentElement.classList.add("ajwa-i18n-el");
+          I18N.nodes.push(l.node);
+        }
+      });
+      I18N.built = I18N.nodes.length >= 10;
+      return I18N.built;
+    }).catch(function () { return false; });
+    return I18N.building;
+  }
+  function applyText(lang) {
+    I18N.nodes.forEach(function (n) {
+      var v = n.__i18n && n.__i18n[lang];
+      if (v != null) {
+        // orijinal boşlukları koru
+        var raw = n.nodeValue, lead = (raw.match(/^\s*/) || [""])[0], tail = (raw.match(/\s*$/) || [""])[0];
+        n.nodeValue = lead + v + tail;
+      }
+    });
+  }
+  function switchLang(target) {
+    if (!target || target === I18N.cur) return;
+    buildI18n().then(function (ok) {
+      if (!ok) { var u = counterpartUrl(); if (u) location.href = u; return; }
+      doc.documentElement.classList.add("ajwa-i18n-fade");
+      setTimeout(function () {
+        applyText(target);
+        band(I18N.cfgs[target] || CFG);
+        doc.documentElement.lang = target;
+        if (I18N.title[target]) document.title = I18N.title[target];
+        if (I18N.url[target]) { try { history.replaceState(null, "", I18N.url[target]); } catch (e) {} }
+        updateToggles(target);
+        I18N.cur = target;
+        requestAnimationFrame(function () { doc.documentElement.classList.remove("ajwa-i18n-fade"); });
+      }, 230);
+    });
+  }
+
+  /* ---- Lenis smooth scroll ---- */
   var lenis = null, rafId = 0;
   function startLenis() {
     if (lenis || typeof window.Lenis === "undefined") return;
@@ -145,10 +252,10 @@
       lenis = new window.Lenis({ autoRaf: false, anchors: true, lerp: 0.09, smoothWheel: true, wheelMultiplier: 1 });
       var raf = function (t) { if (lenis) { lenis.raf(t); rafId = requestAnimationFrame(raf); } };
       rafId = requestAnimationFrame(raf);
-    } catch (e) { /* Lenis yoksa sessizce geç */ }
+    } catch (e) {}
   }
   function stopLenis() {
-    if (rafId) cancelAnimationFrame(rafId), rafId = 0;
+    if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
     if (lenis) { try { lenis.destroy(); } catch (e) {} lenis = null; }
   }
 
@@ -173,8 +280,11 @@
     langToggle();
     toggle();
     startLenis();
-    window.__ajwaLenisStop = stopLenis;   // test/debug kolu (üretimde zararsız)
+    // dil haritasını arka planda önceden kur (ilk geçiş anında olsun)
+    setTimeout(function () { buildI18n(); }, 1200);
+    window.__ajwaLenisStop = stopLenis;
     window.__ajwaLenisStart = startLenis;
+    window.__ajwaSwitchLang = switchLang;
   }
 
   if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", init);

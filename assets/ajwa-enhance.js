@@ -189,23 +189,45 @@
   function buildI18n() {
     if (I18N.built) return Promise.resolve(true);
     if (I18N.building) return I18N.building;
-    var url = counterpartUrl();
-    if (!url) return Promise.resolve(false);
+    var otherUrl = counterpartUrl();
+    if (!otherUrl) return Promise.resolve(false);
+    var curUrl = location.pathname.split("/").pop() || "index.html";
     var other = I18N.cur === "en" ? "tr" : "en";
-    I18N.building = fetch(url).then(function (r) { return r.text(); }).then(function (html) {
-      var d2 = new DOMParser().parseFromString(html, "text/html");
+    // Hem MEVCUT dilin ham sayfasını hem KARŞI dilin ham sayfasını çek:
+    // EN↔TR karşılığını ham-ham YAPISAL İMZA hizasından kur (doğru eşleştirme),
+    // ama canlı DOM'a METNE göre uygula → slider gibi çalışma-anında taşınan
+    // metinler nereye giderse gitsin yakalanır.
+    I18N.building = Promise.all([
+      fetch(curUrl).then(function (r) { return r.text(); }),
+      fetch(otherUrl).then(function (r) { return r.text(); })
+    ]).then(function (h) {
+      var curHtml = h[0], otherHtml = h[1];
+      var dCur = new DOMParser().parseFromString(curHtml, "text/html");
+      var dOther = new DOMParser().parseFromString(otherHtml, "text/html");
       I18N.cfgs[I18N.cur] = CFG;
-      var m = html.match(/window\.AJWA_ENH_CFG\s*=\s*(\{[\s\S]*?\})\s*;/);
+      var m = otherHtml.match(/window\.AJWA_ENH_CFG\s*=\s*(\{[\s\S]*?\})\s*;/);
       if (m) { try { I18N.cfgs[other] = JSON.parse(m[1]); } catch (e) { I18N.cfgs[other] = CFG; } }
       I18N.title[I18N.cur] = document.title;
-      var t2 = d2.querySelector("title"); if (t2) I18N.title[other] = t2.textContent;
-      I18N.url[I18N.cur] = location.pathname.split("/").pop() || "index.html";
-      I18N.url[other] = url;
-      var otherMap = {};
-      collectText(d2, d2.body).forEach(function (o) { if (!(o.key in otherMap)) otherMap[o.key] = o.text; });
+      var t2 = dOther.querySelector("title"); if (t2) I18N.title[other] = t2.textContent;
+      I18N.url[I18N.cur] = curUrl; I18N.url[other] = otherUrl;
+      // 1) ham-ham imza hizası → doğru EN↔TR çiftleri
+      var curBySig = {}, otherBySig = {};
+      collectText(dCur, dCur.body).forEach(function (o) { if (!(o.key in curBySig)) curBySig[o.key] = o.text; });
+      collectText(dOther, dOther.body).forEach(function (o) { if (!(o.key in otherBySig)) otherBySig[o.key] = o.text; });
+      // 2) MEVCUT dil metni → çift  (canlıya metinle uygulamak için)
+      var byText = {};
+      Object.keys(curBySig).forEach(function (k) {
+        if (k in otherBySig) {
+          var ct = curBySig[k], ot = otherBySig[k];
+          if (ct && ct.length >= 2 && ct !== ot && !(ct in byText)) {
+            var pair = {}; pair[I18N.cur] = ct; pair[other] = ot; byText[ct] = pair;
+          }
+        }
+      });
+      // 3) canlı DOM'a metne göre uygula (imza değil → taşınan slider metni de yakalanır)
       collectText(document, doc.body).forEach(function (l) {
-        if (l.key in otherMap && otherMap[l.key] !== "") {
-          var pair = {}; pair[I18N.cur] = l.text; pair[other] = otherMap[l.key];
+        var pair = byText[l.text];
+        if (pair) {
           l.node.__i18n = pair;
           if (l.node.parentElement) l.node.parentElement.classList.add("ajwa-i18n-el");
           I18N.nodes.push(l.node);

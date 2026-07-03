@@ -124,6 +124,50 @@ html.ajwa-enh .ajwa-i18n-el,
 html.ajwa-enh .ajwa-band{transition:opacity .25s ease;}
 html.ajwa-enh.ajwa-i18n-fade .ajwa-i18n-el,
 html.ajwa-enh.ajwa-i18n-fade .ajwa-band{opacity:0;}
+
+/* ---------- İçerik bölümleri: aşırı dikey boşluğu azalt (200px → 96px) ---------- */
+html.ajwa-enh .common-section{padding-top:96px !important;padding-bottom:96px !important;}
+@media (max-width:768px){ html.ajwa-enh .common-section{padding-top:54px !important;padding-bottom:54px !important;} }
+
+/* ---------- Konaklama (Accommodation) etkileşimli bölüm ---------- */
+.ajwa-acc{position:relative;min-height:88vh;display:flex;align-items:center;overflow:hidden;color:#fff;isolation:isolate;}
+.ajwa-acc__bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .8s ease,transform 6s ease;z-index:-2;transform:scale(1.06);}
+.ajwa-acc__bg.is-on{opacity:1;transform:scale(1);}
+.ajwa-acc__overlay{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(26,18,12,.58),rgba(26,18,12,.34) 42%,rgba(26,18,12,.72));}
+.ajwa-acc__content{max-width:1180px;margin:0 auto;padding:90px 24px;width:100%;text-align:center;
+  opacity:0;transform:translateY(36px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1);}
+.ajwa-acc.is-in .ajwa-acc__content{opacity:1;transform:none;}
+.ajwa-acc__eyebrow{font-family:'MuseoSansCyrlW03-500',Arial,sans-serif;font-size:13px;letter-spacing:.36em;text-transform:uppercase;color:var(--ajwa-gold);margin:0 0 14px;}
+.ajwa-acc__heading{font-family:'MinionPro-Regular',Georgia,serif;font-weight:400;font-size:clamp(28px,4vw,50px);line-height:1.15;margin:0 0 46px;color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.35);}
+.ajwa-acc__groups{display:flex;align-items:flex-start;justify-content:center;gap:0;}
+.ajwa-acc__divider{align-self:stretch;width:1px;background:rgba(255,255,255,.26);margin:8px 0;}
+.ajwa-acc__group{flex:1 1 0;max-width:440px;padding:16px 40px 28px;cursor:pointer;transition:opacity .45s ease;}
+.ajwa-acc.has-active .ajwa-acc__group:not(.is-active){opacity:.4;}
+.ajwa-acc__label-link{text-decoration:none;display:inline-block;}
+.ajwa-acc__label{display:inline-block;font-family:'MinionPro-Regular',Georgia,serif;font-size:clamp(30px,4.6vw,58px);letter-spacing:.02em;color:#fff;position:relative;padding-bottom:12px;transition:color .35s ease;}
+.ajwa-acc__label::after{content:"";position:absolute;left:50%;bottom:0;width:0;height:2px;background:var(--ajwa-gold);transform:translateX(-50%);transition:width .45s cubic-bezier(.2,.7,.2,1);}
+.ajwa-acc__group.is-active .ajwa-acc__label{color:#e6c896;}
+.ajwa-acc__group.is-active .ajwa-acc__label::after{width:72%;}
+.ajwa-acc__subs{list-style:none;margin:0;padding:0;max-height:0;overflow:hidden;opacity:0;transition:max-height .55s ease,opacity .5s ease,margin-top .45s ease;}
+.ajwa-acc__group.is-active .ajwa-acc__subs{max-height:340px;opacity:1;margin-top:24px;}
+.ajwa-acc__subs li{transform:translateY(14px);opacity:0;transition:transform .5s ease,opacity .5s ease;}
+.ajwa-acc__group.is-active .ajwa-acc__subs li{transform:none;opacity:1;}
+.ajwa-acc__group.is-active .ajwa-acc__subs li:nth-child(2){transition-delay:.09s;}
+.ajwa-acc__group.is-active .ajwa-acc__subs li:nth-child(3){transition-delay:.18s;}
+.ajwa-acc__group.is-active .ajwa-acc__subs li:nth-child(4){transition-delay:.27s;}
+.ajwa-acc__subs a{display:inline-block;padding:9px 6px;color:rgba(255,255,255,.9);text-decoration:none;font-family:'MuseoSansCyrlW03-500',Arial,sans-serif;font-size:14px;letter-spacing:.16em;text-transform:uppercase;transition:color .25s ease;}
+.ajwa-acc__subs a:hover{color:var(--ajwa-gold);}
+@media (max-width:768px){
+  .ajwa-acc{min-height:auto;}
+  .ajwa-acc__content{padding:56px 18px;}
+  .ajwa-acc__heading{margin-bottom:30px;}
+  .ajwa-acc__groups{flex-direction:column;gap:8px;}
+  .ajwa-acc__divider{width:64%;height:1px;margin:4px auto;align-self:center;}
+  .ajwa-acc__group{padding:12px;max-width:none;}
+  .ajwa-acc__group .ajwa-acc__subs{max-height:none;opacity:1;margin-top:12px;}
+  .ajwa-acc__group .ajwa-acc__subs li{opacity:1;transform:none;}
+  html.ajwa-enh .ajwa-acc.has-active .ajwa-acc__group:not(.is-active){opacity:1;}
+}
 .ajwa-langtoggle{
   position:relative;display:inline-flex;align-items:stretch;
   background:var(--ajwa-beige);border:1px solid #ded0b8;border-radius:999px;padding:4px;

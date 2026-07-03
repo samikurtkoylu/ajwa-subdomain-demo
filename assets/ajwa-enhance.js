@@ -85,6 +85,101 @@
     else hero.insertAdjacentElement("afterend", node);
   }
 
+  /* ---- Konaklama: scroll-reveal + hover alt kategoriler + arka plan görsel değişimi ---- */
+  var ACC_IMG = "assets/img/accommodation/";
+  var ACC_URL = {
+    rooms: { en: "https://www.ajwa.com.tr/sultanahmet/accommodation/rooms.4.aspx", tr: "https://www.ajwa.com.tr/sultanahmet/konaklama/odalar.4.aspx" },
+    suites: { en: "https://www.ajwa.com.tr/sultanahmet/accommodation/suites.5.aspx", tr: "https://www.ajwa.com.tr/sultanahmet/konaklama/suitler.5.aspx" }
+  };
+  var ACC_DATA = {
+    en: { eyebrow: "ACCOMMODATION", heading: "Rooms & suites, each a quiet work of craft", defaultBg: "suite-pano.jpg",
+      groups: [
+        { key: "rooms", label: "Rooms", url: ACC_URL.rooms.en, bg: "room-deluxe.jpg", items: [{ name: "Deluxe Room", img: "room-deluxe.jpg", url: ACC_URL.rooms.en }] },
+        { key: "suites", label: "Suites", url: ACC_URL.suites.en, bg: "suite-corner.jpg", items: [
+          { name: "Family Suite", img: "suite-family.jpg", url: ACC_URL.suites.en },
+          { name: "Corner Suite", img: "suite-corner.jpg", url: ACC_URL.suites.en },
+          { name: "Sultan Suite", img: "suite-sultan.jpg", url: ACC_URL.suites.en }] }
+      ] },
+    tr: { eyebrow: "KONAKLAMA", heading: "Her biri sessiz bir zanaat: odalar ve süitler", defaultBg: "suite-pano.jpg",
+      groups: [
+        { key: "rooms", label: "Odalar", url: ACC_URL.rooms.tr, bg: "room-deluxe.jpg", items: [{ name: "Delüks Oda", img: "room-deluxe.jpg", url: ACC_URL.rooms.tr }] },
+        { key: "suites", label: "Süitler", url: ACC_URL.suites.tr, bg: "suite-corner.jpg", items: [
+          { name: "Aile Süiti", img: "suite-family.jpg", url: ACC_URL.suites.tr },
+          { name: "Köşe Süit", img: "suite-corner.jpg", url: ACC_URL.suites.tr },
+          { name: "Sultan Süiti", img: "suite-sultan.jpg", url: ACC_URL.suites.tr }] }
+      ] }
+  };
+  function isSultanahmetMain() {
+    return CFG.hotel === "AJWA Sultanahmet" && /\/sultanahmet\//.test(location.pathname) &&
+      /(index|anasayfa)\.html$/.test(location.pathname) && !!doc.querySelector(".homepage-banner-wrapper, .homepage-banner");
+  }
+  function accommodation(lang) {
+    if (!isSultanahmetMain()) return;
+    var data = ACC_DATA[lang] || ACC_DATA.en;
+    var old = doc.querySelector(".ajwa-acc");
+    var groupHtml = data.groups.map(function (g) {
+      var subs = g.items.map(function (it) {
+        return '<li><a class="ajwa-acc__sub" href="' + it.url + '" data-img="' + it.img + '">' + esc(it.name) + "</a></li>";
+      }).join("");
+      return '<div class="ajwa-acc__group" data-group="' + g.key + '" data-bg="' + g.bg + '" tabindex="0" role="button" aria-label="' + esc(g.label) + '">' +
+        '<a class="ajwa-acc__label-link" href="' + g.url + '"><span class="ajwa-acc__label">' + esc(g.label) + "</span></a>" +
+        '<ul class="ajwa-acc__subs">' + subs + "</ul></div>";
+    }).join('<div class="ajwa-acc__divider" aria-hidden="true"></div>');
+    var section = el(
+      '<section class="ajwa-acc ajwa-enh-el" aria-label="' + esc(data.eyebrow) + '">' +
+      '<div class="ajwa-acc__bg"></div><div class="ajwa-acc__bg"></div>' +
+      '<div class="ajwa-acc__overlay"></div>' +
+      '<div class="ajwa-acc__content">' +
+        '<p class="ajwa-acc__eyebrow">' + esc(data.eyebrow) + "</p>" +
+        '<h2 class="ajwa-acc__heading">' + esc(data.heading) + "</h2>" +
+        '<div class="ajwa-acc__groups">' + groupHtml + "</div>" +
+      "</div></section>"
+    );
+    var anchor = doc.querySelector(".ajwa-band") || doc.querySelector(".homepage-banner-wrapper, .homepage-banner");
+    if (old) old.parentNode.replaceChild(section, old);
+    else if (anchor) anchor.insertAdjacentElement("afterend", section);
+    else return;
+
+    var layers = section.querySelectorAll(".ajwa-acc__bg"), cur = 0;
+    function setBg(img) {
+      var nx = cur ? 0 : 1;
+      layers[nx].style.backgroundImage = "url('" + ACC_IMG + img + "')";
+      layers[nx].classList.add("is-on"); layers[cur].classList.remove("is-on"); cur = nx;
+    }
+    layers[0].style.backgroundImage = "url('" + ACC_IMG + data.defaultBg + "')";
+    layers[0].classList.add("is-on");
+
+    var groups = section.querySelectorAll(".ajwa-acc__group");
+    function activate(g) {
+      section.classList.add("has-active");
+      groups.forEach(function (x) { x.classList.remove("is-active"); });
+      g.classList.add("is-active");
+      setBg(g.getAttribute("data-bg"));
+    }
+    function reset() {
+      section.classList.remove("has-active");
+      groups.forEach(function (x) { x.classList.remove("is-active"); });
+      setBg(data.defaultBg);
+    }
+    groups.forEach(function (g) {
+      g.addEventListener("mouseenter", function () { activate(g); });
+      g.addEventListener("focusin", function () { activate(g); });
+      g.addEventListener("click", function (e) { if (!e.target.closest("a")) activate(g); });
+      g.querySelectorAll(".ajwa-acc__sub").forEach(function (a) {
+        a.addEventListener("mouseenter", function () { setBg(a.getAttribute("data-img")); });
+        a.addEventListener("focus", function () { activate(g); setBg(a.getAttribute("data-img")); });
+      });
+    });
+    section.addEventListener("mouseleave", reset);
+
+    try {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { section.classList.add("is-in"); io.disconnect(); } });
+      }, { threshold: 0.18 });
+      io.observe(section);
+    } catch (e) { section.classList.add("is-in"); }
+  }
+
   /* ---- Dil değiştirici: segmented EN|TR (kayan thumb) + in-place değişim ---- */
   function isLangLink(a) {
     var t = (a.textContent || "").toUpperCase().trim(), h = a.getAttribute("href") || "";
@@ -143,7 +238,7 @@
   }
 
   /* ==================== in-place i18n motoru ==================== */
-  var SKIP_I18N = ".ajwa-band,.ajwa-langtoggle,.ajwa-quick-contact,.ajwa-toggle,.ajwa-skip";
+  var SKIP_I18N = ".ajwa-band,.ajwa-acc,.ajwa-langtoggle,.ajwa-quick-contact,.ajwa-toggle,.ajwa-skip";
   var I18N = { nodes: [], cfgs: {}, title: {}, url: {}, built: false, building: null, cur: (CFG.lang === "tr" ? "tr" : "en") };
 
   function sigOf(node, stop) {
@@ -253,6 +348,7 @@
         if (I18N.title[target]) document.title = I18N.title[target];
         if (I18N.url[target]) { try { history.replaceState(null, "", I18N.url[target]); } catch (e) {} }
         updateToggles(target);
+        accommodation(target);
         I18N.cur = target;
         requestAnimationFrame(function () { doc.documentElement.classList.remove("ajwa-i18n-fade"); });
       }, 230);
@@ -292,6 +388,7 @@
     landmarks();
     quickContact();
     band();
+    accommodation(CFG.lang === "tr" ? "tr" : "en");
     langToggle();
     toggle();
     startLenis();

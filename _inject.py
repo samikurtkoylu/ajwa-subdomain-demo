@@ -12,15 +12,17 @@ PREFERRED = "Preferred Hotels"
 FHR = "Amex Fine Hotels"
 
 PAGES = {
-    # gateway (grup)
+    # gateway (grup) — artizan istifli H1 (h1html)
     "index.html": dict(lang="en", hotel="AJWA Hotels", phone="+90 212 638 22 00",
         eyebrow="Artisanal Luxury · Istanbul & Cappadocia",
         h1="Artisanal Luxury Hotels in Istanbul & Cappadocia",
+        h1html='<span class="l1">Artisanal Luxury Hotels</span><span class="l2">in</span><span class="l3">Istanbul &amp; Cappadocia</span>',
         tag="Two artisanal gems — a historic boutique hotel in Sultanahmet and cave-suite luxury in Cappadocia.",
         rating="4.8", ratingLabel="guest rating", awards=[MICHELIN, PREFERRED, FHR]),
     "anasayfa.html": dict(lang="tr", hotel="AJWA Otelleri", phone="+90 212 638 22 00",
         eyebrow="Sanatsal Lüks · İstanbul & Kapadokya",
         h1="İstanbul ve Kapadokya'da Sanatsal Lüks Oteller",
+        h1html='<span class="l1">Sanatsal Lüks Oteller</span><span class="l2">·</span><span class="l3">İstanbul &amp; Kapadokya</span>',
         tag="İki sanatsal mücevher — Sultanahmet'te tarihi bir butik otel ve Kapadokya'da mağara-suit lüksü.",
         rating="4.8", ratingLabel="misafir puanı", awards=[MICHELIN, PREFERRED, FHR]),
 
@@ -61,6 +63,8 @@ PAGES = {
         rating="4.8", ratingLabel="misafir puanı", awards=[PREFERRED, FHR]),
 }
 
+LENIS_CSS = '<link rel="stylesheet" href="{r}lenis.css">'
+LENIS_JS  = '<script defer src="{r}lenis.min.js"></script>'
 CSS_TAG = '<link rel="stylesheet" href="{r}ajwa-enhance.css">'
 CFG_TAG = '<script>window.AJWA_ENH_CFG={cfg};</script>'
 JS_TAG  = '<script defer src="{r}ajwa-enhance.js"></script>'
@@ -72,12 +76,16 @@ def inject(page, cfg):
         print("YOK:", page); return False
     html = open(path, encoding="utf-8", errors="replace").read()
     # idempotent: önce eski enjeksiyonu temizle
+    html = re.sub(r'<link[^>]*lenis\.css[^>]*>', '', html)
+    html = re.sub(r'<script[^>]*lenis\.min\.js[^>]*></script>', '', html)
     html = re.sub(r'<link[^>]*ajwa-enhance\.css[^>]*>', '', html)
     html = re.sub(r'<script>window\.AJWA_ENH_CFG=.*?</script>', '', html, flags=re.S)
     html = re.sub(r'<script[^>]*ajwa-enhance\.js[^>]*></script>', '', html)
     r = rel(page)
-    block = ("\n" + CSS_TAG.format(r=r) +
+    block = ("\n" + LENIS_CSS.format(r=r) +
+             "\n" + CSS_TAG.format(r=r) +
              "\n" + CFG_TAG.format(cfg=json.dumps(cfg, ensure_ascii=False)) +
+             "\n" + LENIS_JS.format(r=r) +
              "\n" + JS_TAG.format(r=r) + "\n")
     if "</head>" in html:
         html = html.replace("</head>", block + "</head>", 1)

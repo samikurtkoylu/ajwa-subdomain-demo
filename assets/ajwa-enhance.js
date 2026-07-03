@@ -1,7 +1,7 @@
 /* ============================================================
    AJWA Hotels — Front-End İyileştirme Katmanı (SHOWCASE) — JS
    Progressive enhancement: mevcut markup'ı bozmadan üstüne ekler.
-   Per-sayfa yapılandırma: window.AJWA_ENH_CFG (injector tarafından yazılır)
+   Per-sayfa yapılandırma: window.AJWA_ENH_CFG (injector yazar)
    ============================================================ */
 (function () {
   "use strict";
@@ -15,8 +15,9 @@
   };
 
   function el(html) { var t = doc.createElement("template"); t.innerHTML = html.trim(); return t.content.firstElementChild; }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
-  /* ---- B1: div/span kontrollerini klavye+ekran-okuyucu erişilebilir yap ---- */
+  /* ---- B1: div/span kontrollerini erişilebilir yap ---- */
   function makeButton(node, label) {
     if (!node || node.dataset.ajwaBtn) return;
     node.dataset.ajwaBtn = "1";
@@ -27,7 +28,6 @@
       if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") { e.preventDefault(); node.click(); }
     });
   }
-
   function retrofitControls() {
     makeButton(doc.getElementById("ucHeader_divBookButton"), (CFG.hotel || "AJWA") + " — Rezervasyon / Book now");
     doc.querySelectorAll(".hamburger-menu-opener").forEach(function (n) { makeButton(n, "Menüyü aç / Open menu"); });
@@ -43,58 +43,49 @@
     }
     var hero = doc.querySelector(".homepage-banner-wrapper, .homepage-banner");
     if (hero && !doc.getElementById("ajwa-main")) {
-      var anchor = doc.createElement("span");
-      anchor.id = "ajwa-main"; anchor.setAttribute("tabindex", "-1");
-      hero.parentNode.insertBefore(anchor, hero);
+      var a = doc.createElement("span"); a.id = "ajwa-main"; a.setAttribute("tabindex", "-1");
+      hero.parentNode.insertBefore(a, hero);
     }
   }
 
-  /* ---- A10: header hızlı-iletişim (tel + WhatsApp) ---- */
+  /* ---- A10: header hızlı-iletişim ---- */
   function quickContact() {
     var rail = doc.querySelector(".right-fixed.js-right-fixed") || doc.querySelector(".right-fixed");
     if (!rail || !CFG.phone || doc.querySelector(".ajwa-quick-contact")) return;
-    var telHref = "tel:" + CFG.phone.replace(/[^\d+]/g, "");
-    var waHref = "https://wa.me/" + CFG.phone.replace(/[^\d]/g, "");
     var box = el(
       '<div class="ajwa-quick-contact ajwa-enh-el">' +
-      '<a href="' + telHref + '" aria-label="Telefonla ara: ' + CFG.phone + '">' + ICON.phone + '</a>' +
-      '<a class="ajwa-wa" href="' + waHref + '" target="_blank" rel="noopener" aria-label="WhatsApp ile yaz">' + ICON.wa + '</a>' +
+      '<a href="tel:' + CFG.phone.replace(/[^\d+]/g, "") + '" aria-label="Telefonla ara: ' + esc(CFG.phone) + '">' + ICON.phone + "</a>" +
+      '<a class="ajwa-wa" href="https://wa.me/' + CFG.phone.replace(/[^\d]/g, "") + '" target="_blank" rel="noopener" aria-label="WhatsApp ile yaz">' + ICON.wa + "</a>" +
       "</div>"
     );
     rail.appendChild(box);
   }
 
-  /* ---- A1 + B7 + D7: hero-altı marka & güven bandı ---- */
+  /* ---- A1 + B7: hero-altı marka & güven bandı ---- */
   function band() {
     if (doc.querySelector(".ajwa-band")) return;
     var hero = doc.querySelector(".homepage-banner-wrapper, .homepage-banner");
     if (!hero) return;
-
-    var stars = "★★★★★";
     var telHref = CFG.phone ? "tel:" + CFG.phone.replace(/[^\d+]/g, "") : null;
     var waHref = CFG.phone ? "https://wa.me/" + CFG.phone.replace(/[^\d]/g, "") : null;
 
-    var awardsHtml = (CFG.awards || []).map(function (a) {
-      return '<span class="ajwa-award">' + a + "</span>";
-    }).join("");
-
+    var awardsHtml = (CFG.awards || []).map(function (a) { return '<span class="ajwa-award">' + esc(a) + "</span>"; }).join("");
     var ratingHtml = CFG.rating
-      ? '<span class="ajwa-rating"><span class="ajwa-stars" aria-hidden="true">' + stars + "</span>" +
-        "<b>" + CFG.rating + "</b>/5 " + (CFG.ratingLabel || "") +
-        '<sup>örnek</sup></span>'
+      ? '<span class="ajwa-rating"><span class="ajwa-stars" aria-hidden="true">★★★★★</span><b>' + esc(CFG.rating) + "</b>/5 " + esc(CFG.ratingLabel || "") + "<sup>örnek</sup></span>"
       : "";
+    var h1inner = CFG.h1html ? CFG.h1html : esc(CFG.h1 || CFG.hotel || "AJWA Hotels");
+    var h1class = CFG.h1html ? ' class="ajwa-artisan-h1"' : "";
 
     var ctaHtml =
-      '<a class="ajwa-btn ajwa-btn--gold" href="#" role="button" onclick="var b=document.getElementById(\'ucHeader_divBookButton\');if(b){b.click();return false;}">' +
-        ICON.cal + (CFG.lang === "tr" ? "Rezervasyon Yap" : "Book Your Stay") + "</a>" +
+      '<a class="ajwa-btn ajwa-btn--gold" href="#" role="button" onclick="var b=document.getElementById(\'ucHeader_divBookButton\');if(b){b.click();return false;}">' + ICON.cal + (CFG.lang === "tr" ? "Rezervasyon Yap" : "Book Your Stay") + "</a>" +
       (telHref ? '<a class="ajwa-btn ajwa-btn--primary" href="' + telHref + '">' + ICON.phone + (CFG.lang === "tr" ? "Ara" : "Call") + "</a>" : "") +
       (waHref ? '<a class="ajwa-btn ajwa-btn--ghost" href="' + waHref + '" target="_blank" rel="noopener">' + ICON.wa + "WhatsApp</a>" : "");
 
     var band = el(
-      '<section class="ajwa-band ajwa-enh-el" aria-label="' + (CFG.hotel || "AJWA") + '">' +
-      (CFG.eyebrow ? '<p class="ajwa-band__eyebrow">' + CFG.eyebrow + "</p>" : "") +
-      "<h1>" + (CFG.h1 || CFG.hotel || "AJWA Hotels") + "</h1>" +
-      (CFG.tag ? '<p class="ajwa-band__tag">' + CFG.tag + "</p>" : "") +
+      '<section class="ajwa-band ajwa-enh-el" aria-label="' + esc(CFG.hotel || "AJWA") + '">' +
+      (CFG.eyebrow ? '<p class="ajwa-band__eyebrow">' + esc(CFG.eyebrow) + "</p>" : "") +
+      "<h1" + h1class + ">" + h1inner + "</h1>" +
+      (CFG.tag ? '<p class="ajwa-band__tag">' + esc(CFG.tag) + "</p>" : "") +
       '<div class="ajwa-trust">' + ratingHtml + '<span class="ajwa-awards">' + awardsHtml + "</span></div>" +
       '<div class="ajwa-cta-row">' + ctaHtml + "</div>" +
       "</section>"
@@ -102,51 +93,78 @@
     hero.insertAdjacentElement("afterend", band);
   }
 
-  /* ---- D7: gateway destinasyon kartlarına CTA + erişilebilir ad ---- */
-  function gatewayCards() {
-    var cards = doc.querySelectorAll(".hotelBox");
-    if (!cards.length) return;
-    cards.forEach(function (card) {
-      if (card.querySelector(".ajwa-card-cta")) return;
-      var link = card.querySelector("a[href]");
-      var name = (card.querySelector(".hotel-name") || {}).textContent || "";
-      if (link) {
-        var cta = el('<a class="ajwa-card-cta ajwa-enh-el" href="' + link.getAttribute("href") + '">' +
-          (CFG.lang === "tr" ? "Keşfet →" : "Explore →") + "</a>");
-        if (name) cta.setAttribute("aria-label", (CFG.lang === "tr" ? "Keşfet: " : "Explore: ") + name.trim());
-        (card.querySelector(".hotel-name") ? card.querySelector(".hotel-name").parentNode : card).appendChild(cta);
+  /* ---- Dil değiştirici: segmented EN|TR (21st.dev tarzı, kayan thumb) ---- */
+  function langToggle() {
+    doc.querySelectorAll(".language-select-area").forEach(function (area) {
+      if (area.dataset.ajwaLang) return;
+      var links = Array.prototype.slice.call(area.querySelectorAll("a[href]"));
+      if (links.length < 2) return;
+      area.dataset.ajwaLang = "1";
+      // hangi link EN / TR? metne göre eşle
+      function pick(codes) {
+        return links.filter(function (a) {
+          var t = (a.textContent || "").toUpperCase();
+          return codes.some(function (c) { return t.indexOf(c) > -1; });
+        })[0];
       }
+      var en = pick(["ENGLISH", "EN"]) || links[0];
+      var tr = pick(["TÜRK", "TURK", "TR"]) || links[1];
+      var enActive = en.classList.contains("active");
+      var enHref = en.getAttribute("href"), trHref = tr.getAttribute("href");
+      function seg(code, href, active) {
+        return '<a href="' + href.replace(/:443(?=\/|$)/, "") + '"' + (active ? ' class="active" aria-current="true"' : "") +
+          ' lang="' + (code === "EN" ? "en" : "tr") + '">' + code + "</a>";
+      }
+      var wrap = el(
+        '<div class="ajwa-langtoggle ajwa-enh-el" role="group" aria-label="Dil / Language" data-active="' + (enActive ? "0" : "1") + '">' +
+        '<span class="ajwa-langtoggle__thumb" aria-hidden="true"></span>' +
+        seg("EN", enHref, enActive) + seg("TR", trHref, !enActive) +
+        "</div>"
+      );
+      // orijinal linkleri gizle, toggle'ı ekle (iyileştirme kapalıyken orijinal görünür)
+      links.forEach(function (a) { a.classList.add("ajwa-enh-hide-orig"); });
+      area.appendChild(wrap);
     });
   }
 
-  /* ---- A8: dil değiştirici :443 temizliği + lang/aria-current ---- */
-  function langLinks() {
-    doc.querySelectorAll(".language-select-area a[href]").forEach(function (a) {
-      a.href = a.getAttribute("href").replace(/:443(?=\/|$)/, "");
-    });
+  /* ---- Lenis smooth scroll (vendor: assets/lenis.min.js) ---- */
+  var lenis = null, rafId = 0;
+  function startLenis() {
+    if (lenis || typeof window.Lenis === "undefined") return;
+    try {
+      lenis = new window.Lenis({ autoRaf: false, anchors: true, lerp: 0.09, smoothWheel: true, wheelMultiplier: 1 });
+      var raf = function (t) { if (lenis) { lenis.raf(t); rafId = requestAnimationFrame(raf); } };
+      rafId = requestAnimationFrame(raf);
+    } catch (e) { /* Lenis yoksa sessizce geç */ }
+  }
+  function stopLenis() {
+    if (rafId) cancelAnimationFrame(rafId), rafId = 0;
+    if (lenis) { try { lenis.destroy(); } catch (e) {} lenis = null; }
   }
 
   /* ---- Toggle: öncesi/sonrası ---- */
   function toggle() {
     if (doc.querySelector(".ajwa-toggle")) return;
-    var btn = el('<button class="ajwa-toggle" type="button" aria-pressed="true" title="Front-end iyileştirmelerini aç/kapat">' +
-      '<span class="dot" aria-hidden="true"></span><span class="lbl"></span></button>');
+    var btn = el('<button class="ajwa-toggle" type="button" aria-pressed="true" title="Front-end iyileştirmelerini aç/kapat"><span class="dot" aria-hidden="true"></span><span class="lbl"></span></button>');
     btn.addEventListener("click", function () {
       var on = doc.documentElement.classList.toggle("ajwa-enh");
       btn.setAttribute("aria-pressed", on ? "true" : "false");
+      if (on) startLenis(); else stopLenis();
     });
     doc.body.appendChild(btn);
   }
 
   function init() {
-    doc.documentElement.classList.add("ajwa-enh"); // varsayılan: AÇIK
+    doc.documentElement.classList.add("ajwa-enh");
     retrofitControls();
     landmarks();
     quickContact();
     band();
-    gatewayCards();
-    langLinks();
+    langToggle();
     toggle();
+    startLenis();
+    window.__ajwaLenisStop = stopLenis;   // test/debug kolu (üretimde zararsız)
+    window.__ajwaLenisStart = startLenis;
   }
 
   if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", init);

@@ -1,23 +1,23 @@
 /* ============================================================
    AJWA Hotels — Front-End İyileştirme Katmanı (SHOWCASE)
-   Kapsam: A1 H1 · A6 odak · A7 kontrast · A10 tel/WhatsApp
-           B1 buton semantiği · B7 sosyal kanıt · C4 gerçek-bold CTA · D7 gateway
+   A1 H1 · A6 odak · A7 kontrast · A10 tel/WhatsApp · B1 buton
+   B7 sosyal kanıt · C4 gerçek-bold CTA · dil toggle · artizan H1 · Lenis
    Tüm görsel kurallar html.ajwa-enh altında → toggle ile aç/kapat.
    Marka: altın #c5a477, koyu kahve #382b25, krem #f6f1e9
    ============================================================ */
 
 :root{
   --ajwa-gold:#c5a477;
-  --ajwa-gold-ink:#8a6d3b;      /* A7: beyaz üstünde AA-uyumlu koyu altın */
+  --ajwa-gold-ink:#8a6d3b;
   --ajwa-brown:#382b25;
+  --ajwa-brown-warm:#7c5a2f;
   --ajwa-cream:#f6f1e9;
 }
 
-/* Enjekte edilen tüm öğeler varsayılan gizli; yalnız iyileştirme AÇIKken görünür */
 .ajwa-enh-el{display:none !important;}
 html.ajwa-enh .ajwa-enh-el{display:revert !important;}
 
-/* ---------- A6: Klavye odak göstergesi (global outline:none ezmesini geri al) ---------- */
+/* ---------- A6: Klavye odak göstergesi ---------- */
 html.ajwa-enh a:focus-visible,
 html.ajwa-enh button:focus-visible,
 html.ajwa-enh [role="button"]:focus-visible,
@@ -26,29 +26,24 @@ html.ajwa-enh select:focus-visible,
 html.ajwa-enh textarea:focus-visible,
 html.ajwa-enh [tabindex]:focus-visible{
   outline:3px solid var(--ajwa-gold) !important;
-  outline-offset:3px !important;
-  border-radius:2px;
+  outline-offset:3px !important;border-radius:2px;
 }
 
-/* ---------- A7: Kontrast düzeltmeleri ---------- */
+/* ---------- A7: Kontrast ---------- */
 html.ajwa-enh input::placeholder,
 html.ajwa-enh textarea::placeholder{color:#6b6b6b !important;opacity:1 !important;}
 html.ajwa-enh .label,
 html.ajwa-enh .promo,
 html.ajwa-enh .promo-code{color:var(--ajwa-gold-ink) !important;}
 
-/* ---------- C4: BOOK NOW gerçek ağırlık + belirginlik ---------- */
+/* ---------- C4: BOOK NOW gerçek ağırlık ---------- */
 html.ajwa-enh .book-now-button .line1,
-html.ajwa-enh .book-now-button .line2{
-  font-weight:700 !important;
-  letter-spacing:.14em !important;
-}
+html.ajwa-enh .book-now-button .line2{font-weight:700 !important;letter-spacing:.14em !important;}
 
-/* ---------- A10: Header hızlı-iletişim rayı (tel + WhatsApp) ---------- */
+/* ---------- A10: Header hızlı-iletişim (tel + WhatsApp) ---------- */
 .ajwa-quick-contact{display:flex;flex-direction:column;gap:10px;margin-top:12px;}
 .ajwa-quick-contact a{
-  display:flex;align-items:center;justify-content:center;
-  width:46px;height:46px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;
   background:var(--ajwa-brown);color:#fff;text-decoration:none;
   box-shadow:0 2px 8px rgba(0,0,0,.28);transition:transform .15s ease,background .15s ease;
 }
@@ -56,24 +51,35 @@ html.ajwa-enh .book-now-button .line2{
 .ajwa-quick-contact a.ajwa-wa{background:#25d366;}
 .ajwa-quick-contact svg{width:22px;height:22px;fill:#fff;}
 
-/* ---------- A1 + B7 + D7: Hero-altı marka & güven bandı ---------- */
+/* ---------- A1 + B7: Hero-altı marka & güven bandı ---------- */
 .ajwa-band{
   background:linear-gradient(180deg,var(--ajwa-cream),#fff);
-  border-top:3px solid var(--ajwa-gold);
-  padding:34px 22px;text-align:center;font-family:inherit;
+  border-top:3px solid var(--ajwa-gold);padding:34px 22px;text-align:center;font-family:inherit;
 }
-.ajwa-band__eyebrow{
-  font-size:12px;letter-spacing:.28em;text-transform:uppercase;
-  color:var(--ajwa-gold-ink);margin:0 0 10px;
-}
+.ajwa-band__eyebrow{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--ajwa-gold-ink);margin:0 0 12px;}
 .ajwa-band h1{
   font-family:'MinionPro-Regular',Georgia,serif;
   font-size:clamp(26px,4vw,44px);line-height:1.15;color:var(--ajwa-brown);
-  margin:0 auto 8px;max-width:20ch;font-weight:400;
+  margin:0 auto 8px;max-width:22ch;font-weight:400;
 }
-.ajwa-band__tag{color:#5a4d44;font-size:clamp(14px,1.6vw,17px);margin:0 auto 20px;max-width:52ch;}
+.ajwa-band__tag{color:#5a4d44;font-size:clamp(14px,1.6vw,17px);margin:14px auto 20px;max-width:52ch;}
 
-/* B7: sosyal kanıt / güven satırı */
+/* Artizan istifli H1 (gateway) */
+.ajwa-artisan-h1{display:block;line-height:1.02;max-width:none !important;margin:0 auto 6px;}
+.ajwa-artisan-h1 .l1{
+  display:block;font-family:'MinionPro-Regular',Georgia,serif;font-weight:400;
+  font-size:clamp(32px,6vw,66px);color:#1c130c;letter-spacing:.005em;
+}
+.ajwa-artisan-h1 .l2{
+  display:block;font-style:italic;color:#a2968a;font-family:'MinionPro-Regular',Georgia,serif;
+  font-size:clamp(15px,2vw,23px);margin:8px 0 3px;letter-spacing:.03em;
+}
+.ajwa-artisan-h1 .l3{
+  display:block;font-family:'MinionPro-Regular',Georgia,serif;font-weight:400;
+  font-size:clamp(24px,4.4vw,50px);color:var(--ajwa-brown-warm);letter-spacing:.02em;
+}
+
+/* B7 güven satırı */
 .ajwa-trust{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px 26px;margin:0 0 22px;}
 .ajwa-rating{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--ajwa-brown);}
 .ajwa-rating .ajwa-stars{color:var(--ajwa-gold);letter-spacing:2px;font-size:18px;}
@@ -81,8 +87,7 @@ html.ajwa-enh .book-now-button .line2{
 .ajwa-rating sup{font-size:9px;color:#9a8f84;font-weight:400;letter-spacing:.04em;}
 .ajwa-awards{display:inline-flex;flex-wrap:wrap;align-items:center;gap:10px 18px;}
 .ajwa-award{
-  display:inline-flex;align-items:center;gap:7px;
-  font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#5a4d44;
+  display:inline-flex;align-items:center;gap:7px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#5a4d44;
   padding:6px 12px;border:1px solid #e2d6c3;border-radius:999px;background:#fff;
 }
 .ajwa-award::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ajwa-gold);}
@@ -90,8 +95,7 @@ html.ajwa-enh .book-now-button .line2{
 /* CTA satırı */
 .ajwa-cta-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;}
 .ajwa-btn{
-  display:inline-flex;align-items:center;gap:9px;
-  font-size:14px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+  display:inline-flex;align-items:center;gap:9px;font-size:14px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
   padding:14px 26px;border-radius:2px;text-decoration:none;cursor:pointer;border:1.5px solid transparent;
   transition:transform .15s ease,box-shadow .15s ease,background .15s ease;
 }
@@ -101,31 +105,40 @@ html.ajwa-enh .book-now-button .line2{
 .ajwa-btn--ghost{background:#fff;color:var(--ajwa-brown);border-color:var(--ajwa-brown);}
 .ajwa-btn svg{width:18px;height:18px;fill:currentColor;}
 
-/* D7: gateway destinasyon kartlarına CTA */
-html.ajwa-enh .hotelBox{position:relative;}
-.ajwa-card-cta{
-  display:inline-block;margin-top:10px;
-  font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
-  color:#fff;background:var(--ajwa-brown);padding:9px 18px;border-radius:2px;text-decoration:none;
+/* ---------- Dil değiştirici: 21st.dev tarzı segmented EN|TR (kayan thumb) ---------- */
+html.ajwa-enh .language-select-area{text-align:center;}
+html.ajwa-enh .language-select-area a.ajwa-enh-hide-orig{display:none !important;}
+.ajwa-langtoggle{
+  position:relative;display:inline-flex;align-items:stretch;
+  background:#fff;border:1px solid #e2d6c3;border-radius:999px;padding:4px;
+  box-shadow:0 2px 10px rgba(56,43,37,.1);
 }
-.ajwa-card-cta:hover{background:var(--ajwa-gold);color:#2a2018;}
+.ajwa-langtoggle a{
+  position:relative;z-index:2;flex:1 1 0;min-width:56px;
+  display:inline-flex;align-items:center;justify-content:center;padding:8px 18px;border-radius:999px;text-decoration:none;
+  font:600 12px/1 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;letter-spacing:.14em;
+  color:#6b5d51;transition:color .28s ease;
+}
+.ajwa-langtoggle a.active{color:#fff;}
+.ajwa-langtoggle__thumb{
+  position:absolute;z-index:1;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);
+  border-radius:999px;background:var(--ajwa-brown);box-shadow:0 2px 8px rgba(56,43,37,.32);
+  transition:left .3s cubic-bezier(.4,0,.2,1);
+}
+.ajwa-langtoggle[data-active="1"] .ajwa-langtoggle__thumb{left:50%;}
 
-/* B3: skip-link */
+/* ---------- B3: skip-link ---------- */
 .ajwa-skip{
-  position:fixed;top:-60px;left:12px;z-index:100001;
-  background:var(--ajwa-brown);color:#fff;padding:10px 16px;border-radius:0 0 4px 4px;
-  text-decoration:none;transition:top .15s ease;
+  position:fixed;top:-60px;left:12px;z-index:100001;background:var(--ajwa-brown);color:#fff;
+  padding:10px 16px;border-radius:0 0 4px 4px;text-decoration:none;transition:top .15s ease;
 }
 .ajwa-skip:focus{top:0;}
 
-/* ---------- Toggle (öncesi/sonrası) kontrolü — her zaman görünür ---------- */
+/* ---------- Toggle (öncesi/sonrası) ---------- */
 .ajwa-toggle{
-  position:fixed;left:16px;bottom:16px;z-index:100000;
-  display:flex;align-items:center;gap:9px;
-  background:rgba(56,43,37,.94);color:#fff;
-  padding:9px 14px;border-radius:999px;border:0;cursor:pointer;
-  font:600 12px/1 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-  box-shadow:0 3px 12px rgba(0,0,0,.3);
+  position:fixed;left:16px;bottom:16px;z-index:100000;display:flex;align-items:center;gap:9px;
+  background:rgba(56,43,37,.94);color:#fff;padding:9px 14px;border-radius:999px;border:0;cursor:pointer;
+  font:600 12px/1 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;box-shadow:0 3px 12px rgba(0,0,0,.3);
 }
 .ajwa-toggle .dot{width:16px;height:16px;border-radius:50%;background:#7a7067;transition:background .15s ease;}
 html.ajwa-enh .ajwa-toggle .dot{background:#25d366;}

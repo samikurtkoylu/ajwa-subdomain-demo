@@ -108,9 +108,11 @@ html.ajwa-enh .book-now-button .line2{font-weight:700 !important;letter-spacing:
 /* ---------- Dil değiştirici: 21st.dev tarzı segmented EN|TR (kayan thumb) ---------- */
 html.ajwa-enh .language-select-area{text-align:center;}
 html.ajwa-enh a.ajwa-enh-hide-orig{display:none !important;}
-/* gateway sağ üst görünür dil menüsü: eski kutu çerçevesini kaldır, sadece pill kalsın */
+/* gateway sağ üst görünür dil menüsü: eski kutu çerçevesini kaldır, sadece pill kalsın;
+   logo gibi SABİT kalsın (scroll'da kaybolmasın) */
 html.ajwa-enh #ucHeader_divHomeDisplayMenu{
   background:transparent !important;border:0 !important;border-radius:0 !important;box-shadow:none !important;padding:0 !important;
+  position:fixed !important;top:40px !important;right:40px !important;z-index:66 !important;
 }
 html.ajwa-enh #ucHeader_divHomeDisplayMenu .ajwa-langtoggle{margin:0;}
 html.ajwa-enh #ucHeader_divHomeDisplayMenu ul{margin:0;padding:0;list-style:none;background:transparent !important;border:0 !important;}

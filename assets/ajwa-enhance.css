@@ -107,7 +107,10 @@ html.ajwa-enh .book-now-button .line2{font-weight:700 !important;letter-spacing:
 
 /* ---------- Dil değiştirici: 21st.dev tarzı segmented EN|TR (kayan thumb) ---------- */
 html.ajwa-enh .language-select-area{text-align:center;}
-html.ajwa-enh .language-select-area a.ajwa-enh-hide-orig{display:none !important;}
+html.ajwa-enh a.ajwa-enh-hide-orig{display:none !important;}
+/* gateway sağ üst görünür dil menüsü içindeki toggle */
+html.ajwa-enh #ucHeader_divHomeDisplayMenu .ajwa-langtoggle{margin:0;}
+html.ajwa-enh #ucHeader_divHomeDisplayMenu ul{margin:0;padding:0;list-style:none;}
 .ajwa-langtoggle{
   position:relative;display:inline-flex;align-items:stretch;
   background:#fff;border:1px solid #e2d6c3;border-radius:999px;padding:4px;

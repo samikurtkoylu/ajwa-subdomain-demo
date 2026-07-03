@@ -93,38 +93,48 @@
     hero.insertAdjacentElement("afterend", band);
   }
 
-  /* ---- Dil değiştirici: segmented EN|TR (21st.dev tarzı, kayan thumb) ---- */
-  function langToggle() {
-    doc.querySelectorAll(".language-select-area").forEach(function (area) {
-      if (area.dataset.ajwaLang) return;
-      var links = Array.prototype.slice.call(area.querySelectorAll("a[href]"));
-      if (links.length < 2) return;
-      area.dataset.ajwaLang = "1";
-      // hangi link EN / TR? metne göre eşle
-      function pick(codes) {
-        return links.filter(function (a) {
-          var t = (a.textContent || "").toUpperCase();
-          return codes.some(function (c) { return t.indexOf(c) > -1; });
-        })[0];
-      }
-      var en = pick(["ENGLISH", "EN"]) || links[0];
-      var tr = pick(["TÜRK", "TURK", "TR"]) || links[1];
-      var enActive = en.classList.contains("active");
-      var enHref = en.getAttribute("href"), trHref = tr.getAttribute("href");
-      function seg(code, href, active) {
-        return '<a href="' + href.replace(/:443(?=\/|$)/, "") + '"' + (active ? ' class="active" aria-current="true"' : "") +
-          ' lang="' + (code === "EN" ? "en" : "tr") + '">' + code + "</a>";
-      }
-      var wrap = el(
-        '<div class="ajwa-langtoggle ajwa-enh-el" role="group" aria-label="Dil / Language" data-active="' + (enActive ? "0" : "1") + '">' +
-        '<span class="ajwa-langtoggle__thumb" aria-hidden="true"></span>' +
-        seg("EN", enHref, enActive) + seg("TR", trHref, !enActive) +
-        "</div>"
-      );
-      // orijinal linkleri gizle, toggle'ı ekle (iyileştirme kapalıyken orijinal görünür)
-      links.forEach(function (a) { a.classList.add("ajwa-enh-hide-orig"); });
-      area.appendChild(wrap);
+  /* ---- Dil değiştirici: segmented EN|TR (21st.dev tarzı, kayan thumb) ----
+     İki yeri de kapsar:
+       .language-select-area  (hamburger menü içinde, iki link EN+TR)
+       #ucHeader_divHomeDisplayMenu.defaultMenu (gateway sağ üst, görünür, tek "diğer dil" linki) */
+  function isLangLink(a) {
+    var t = (a.textContent || "").toUpperCase().trim(), h = a.getAttribute("href") || "";
+    return /ENGLISH|T[UÜ]RK[CÇ]E|^EN$|^TR$/.test(t) || /(index|anasayfa|ajwa-homes|ajwa-evleri)\.html/i.test(h);
+  }
+  function buildToggle(area) {
+    if (!area || area.dataset.ajwaLang) return;
+    var links = Array.prototype.slice.call(area.querySelectorAll("a[href]")).filter(isLangLink);
+    if (!links.length) return;
+    var curLang = CFG.lang === "tr" ? "tr" : "en";
+    var curFile = (location.pathname.split("/").pop() || "index.html");
+    var enHref = null, trHref = null;
+    links.forEach(function (a) {
+      var t = (a.textContent || "").toUpperCase(), h = a.getAttribute("href") || "";
+      if (t.indexOf("ENGLISH") > -1 || t.trim() === "EN" || /(index|ajwa-homes)\.html/i.test(h)) enHref = h;
+      else if (t.indexOf("TÜRK") > -1 || t.indexOf("TURK") > -1 || t.trim() === "TR" || /(anasayfa|ajwa-evleri)\.html/i.test(h)) trHref = h;
     });
+    // eksik olan (mevcut dil) linkini kendi sayfasıyla tamamla
+    if (curLang === "en" && !enHref) enHref = curFile;
+    if (curLang === "tr" && !trHref) trHref = curFile;
+    if (!enHref || !trHref) return;
+    area.dataset.ajwaLang = "1";
+    var enActive = curLang === "en";
+    function seg(code, href, active) {
+      return '<a href="' + href.replace(/:443(?=\/|$)/, "") + '"' + (active ? ' class="active" aria-current="true"' : "") +
+        ' lang="' + (code === "EN" ? "en" : "tr") + '">' + code + "</a>";
+    }
+    var wrap = el(
+      '<div class="ajwa-langtoggle ajwa-enh-el" role="group" aria-label="Dil / Language" data-active="' + (enActive ? "0" : "1") + '">' +
+      '<span class="ajwa-langtoggle__thumb" aria-hidden="true"></span>' +
+      seg("EN", enHref, enActive) + seg("TR", trHref, !enActive) +
+      "</div>"
+    );
+    links.forEach(function (a) { a.classList.add("ajwa-enh-hide-orig"); });
+    area.appendChild(wrap);
+  }
+  function langToggle() {
+    doc.querySelectorAll(".language-select-area").forEach(buildToggle);
+    buildToggle(doc.getElementById("ucHeader_divHomeDisplayMenu"));
   }
 
   /* ---- Lenis smooth scroll (vendor: assets/lenis.min.js) ---- */

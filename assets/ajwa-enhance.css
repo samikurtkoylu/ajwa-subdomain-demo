@@ -172,6 +172,28 @@ html.ajwa-enh .common-section{padding-top:96px !important;padding-bottom:96px !i
   .ajwa-acc__group .ajwa-acc__subs li{opacity:1;transform:none;}
   html.ajwa-enh .ajwa-acc.has-active .ajwa-acc__group:not(.is-active){opacity:1;}
 }
+
+/* ---------- Footer 'Hostamedia' kredisini kaldır (tüm sayfalar) ---------- */
+html.ajwa-enh .hostamedia{display:none !important;}
+
+/* ---------- Yenileme popup'ı: gerilmiş düşük-çöz. görseli net HTML kartla değiştir ---------- */
+html.ajwa-enh .fullModal img.ajwa-modal-hide{display:none !important;}
+.ajwa-renewal{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;
+  width:min(620px,92vw);max-height:88vh;overflow:auto;
+  background:var(--ajwa-cream);padding:54px 46px;text-align:center;
+  border:1px solid #cdb98f;box-shadow:0 30px 90px rgba(0,0,0,.45);
+}
+.ajwa-renewal::before{content:"";position:absolute;inset:12px;border:1px solid #d8c49e;pointer-events:none;}
+html.ajwa-enh .fullModal .close{z-index:3;}
+html.ajwa-enh .fullModal .ajwa-renewal__logo{width:92px !important;height:auto !important;max-width:92px !important;display:block;margin:0 auto 24px;}
+.ajwa-renewal__title{font-family:'MinionPro-Regular',Georgia,serif;font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:clamp(15px,2.2vw,21px);color:var(--ajwa-brown);margin:0 0 26px;}
+.ajwa-renewal p{font-family:'MinionPro-Regular',Georgia,serif;color:#4a3d34;font-size:clamp(14px,1.6vw,17px);line-height:1.75;margin:0 0 18px;}
+.ajwa-renewal p:last-child{margin-bottom:0;}
+.ajwa-renewal strong{color:var(--ajwa-brown);font-weight:700;}
+.ajwa-renewal a{color:var(--ajwa-gold-ink);text-decoration:none;font-weight:700;border-bottom:1px solid rgba(138,109,59,.4);}
+.ajwa-renewal a:hover{color:var(--ajwa-brown);}
+@media (max-width:600px){ .ajwa-renewal{padding:40px 26px;} .ajwa-renewal::before{inset:9px;} }
 .ajwa-langtoggle{
   position:relative;display:inline-flex;align-items:stretch;
   background:var(--ajwa-beige);border:1px solid #ded0b8;border-radius:999px;padding:4px;

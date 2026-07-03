@@ -106,7 +106,7 @@
         ] }
     },
     cappadocia: {
-      en: { eyebrow: "ACCOMMODATION", heading: "Rooms & cave suites, carved into Cappadocia", defaultBg: "cave-kilicarslan.jpg",
+      en: { eyebrow: "ACCOMMODATION", heading: "Rooms & cave suites, carved into Cappadocia", defaultBg: "cappadocia-terrace.jpg",
         groups: [
           { key: "rooms", label: "Rooms", url: CP + "accommodation/hotel-rooms.2.aspx", bg: "room-kervansaray-deluxe.jpg", items: [
             { name: "Kervansaray Deluxe Room", img: "room-kervansaray-deluxe.jpg" },
@@ -120,7 +120,7 @@
             { name: "Alaeddin Ali Bey Cave Suite", img: "cave-alaeddin.jpg" },
             { name: "Nevşehirli Damat İbrahim Paşa Cave Suite", img: "cave-nevsehirli.jpg" }] }
         ] },
-      tr: { eyebrow: "KONAKLAMA", heading: "Kapadokya'ya oyulmuş odalar ve mağara suitler", defaultBg: "cave-kilicarslan.jpg",
+      tr: { eyebrow: "KONAKLAMA", heading: "Kapadokya'ya oyulmuş odalar ve mağara suitler", defaultBg: "cappadocia-terrace.jpg",
         groups: [
           { key: "rooms", label: "Odalar", url: CP + "konaklama/odalar.2.aspx", bg: "room-kervansaray-deluxe.jpg", items: [
             { name: "Kervansaray Delüks Oda", img: "room-kervansaray-deluxe.jpg" },
@@ -221,6 +221,41 @@
       }, { threshold: 0.18 });
       io.observe(section);
     } catch (e) { section.classList.add("is-in"); }
+  }
+
+  /* ---- Yenileme popup'ı: düşük çözünürlüklü gerilmiş görseli net HTML kartla değiştir ---- */
+  var RENEWAL_LOGO = "assets/img/dist/assets/ajwa-hotels-logo.32d5ca4555.svg";
+  var RENEWAL = {
+    en: { title: "A Pause for Renewal", body: [
+      "As of <strong>March 15, 2026</strong>, <strong>AJWA Cappadocia</strong> will gently close its doors for a period of renewal.",
+      "This time allows us to refine, restore, and elevate the experience that awaits you, with the same devotion to heritage, craftsmanship, and quiet luxury.",
+      "We will look forward to welcoming you back to a reimagined <strong>AJWA Cappadocia</strong> soon.",
+      'For inquiries and future reservations, please contact us at <a href="mailto:info@ajwa.com.tr">info@ajwa.com.tr</a> or visit <a href="https://www.ajwa.com.tr" target="_blank" rel="noopener">ajwa.com.tr</a>.'
+    ] },
+    tr: { title: "Yenilenme İçin Bir Ara", body: [
+      "<strong>15 Mart 2026</strong> itibarıyla <strong>AJWA Cappadocia</strong>, bir yenilenme dönemi için kapılarını nazikçe kapatacaktır.",
+      "Bu süre; mirasa, zanaate ve sakin lükse olan aynı bağlılıkla, sizi bekleyen deneyimi inceltmemize, onarmamıza ve yükseltmemize olanak tanıyor.",
+      "Yeniden hayal edilmiş <strong>AJWA Cappadocia</strong>'da sizi tekrar ağırlamayı sabırsızlıkla bekliyoruz.",
+      'Bilgi ve gelecek rezervasyonlar için lütfen <a href="mailto:info@ajwa.com.tr">info@ajwa.com.tr</a> adresinden bize ulaşın veya <a href="https://www.ajwa.com.tr" target="_blank" rel="noopener">ajwa.com.tr</a> adresini ziyaret edin.'
+    ] }
+  };
+  function renewalModal(lang) {
+    if (!/\/cappadocia\//.test(location.pathname)) return;
+    var modal = doc.querySelector(".fullModal");
+    if (!modal) return;
+    var img = modal.querySelector('img[src*="modal"]');
+    if (img) img.classList.add("ajwa-modal-hide");
+    var C = RENEWAL[lang] || RENEWAL.en;
+    var card = el(
+      '<div class="ajwa-renewal ajwa-enh-el">' +
+      '<img class="ajwa-renewal__logo" src="' + RENEWAL_LOGO + '" alt="AJWA Hotels">' +
+      '<h2 class="ajwa-renewal__title">' + esc(C.title) + "</h2>" +
+      C.body.map(function (p) { return "<p>" + p + "</p>"; }).join("") +
+      "</div>"
+    );
+    var oldCard = modal.querySelector(".ajwa-renewal");
+    if (oldCard) oldCard.parentNode.replaceChild(card, oldCard);
+    else modal.appendChild(card);
   }
 
   /* ---- Dil değiştirici: segmented EN|TR (kayan thumb) + in-place değişim ---- */
@@ -392,6 +427,7 @@
         if (I18N.url[target]) { try { history.replaceState(null, "", I18N.url[target]); } catch (e) {} }
         updateToggles(target);
         accommodation(target);
+        renewalModal(target);
         I18N.cur = target;
         requestAnimationFrame(function () { doc.documentElement.classList.remove("ajwa-i18n-fade"); });
       }, 230);
@@ -432,6 +468,7 @@
     quickContact();
     band();
     accommodation(CFG.lang === "tr" ? "tr" : "en");
+    renewalModal(CFG.lang === "tr" ? "tr" : "en");
     langToggle();
     toggle();
     startLenis();

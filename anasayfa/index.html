@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en" id="HtmlTag">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#382B25">
+<title>Luxury Hotels in Istanbul and Cappadocia | AJWA Hotels</title>
+<link rel="shortcut icon" href="../assets/img/favicon.ico">
+
+<!-- On-state illustrations preloaded so lights never flash on first hover -->
+<link rel="preload" as="image" href="img/sa-off-1086.webp" type="image/webp">
+<link rel="preload" as="image" href="img/ca-off-1086.webp" type="image/webp">
+<link rel="preload" as="image" href="img/hom-off-1086.webp" type="image/webp">
+
+<style>
+/* ============================================================
+   AJWA Hotels — Marka Gateway ("Üç Kapı")
+   Palet: gold #c5a477 · gold-ink #8a6d3b · brown #382b25
+          brown-warm #7c5a2f · cream #f6f1e9 · beige #efe6d5
+   Fontlar: MinionPro (serif display) · MuseoSans (sans UI)
+   ============================================================ */
+
+/* ---------- Fontlar ---------- */
+@font-face{
+  font-family:'MinionPro-Regular';
+  src:url('../assets/fonts/MinionPro-Regular.9c331e6f0d.woff2') format('woff2'),
+      url('../assets/fonts/MinionPro-Regular.ddff8cbcd8.woff') format('woff');
+  font-weight:400;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'MinionPro-ItDisp';
+  src:url('../assets/fonts/subset-MinionPro-ItDisp.263d9225ef.woff2') format('woff2'),
+      url('../assets/fonts/subset-MinionPro-ItDisp.b06754daea.woff') format('woff');
+  font-weight:400;font-style:italic;font-display:swap;
+}
+@font-face{
+  font-family:'MuseoSansCyrlW03-500';
+  src:url('../assets/fonts/MuseoSansCyrlW03-500.5049fd8b8f.woff') format('woff');
+  font-weight:500;font-style:normal;font-display:swap;
+}
+
+/* ---------- Token'lar & reset ---------- */
+:root{
+  --gold:#c5a477; --gold-ink:#8a6d3b; --brown:#382b25;
+  --brown-warm:#7c5a2f; --cream:#f6f1e9; --beige:#efe6d5;
+  --ink:#1c130c; --muted:#5a4d44; --serif:'MinionPro-Regular',Georgia,serif;
+  --ital:'MinionPro-ItDisp','MinionPro-Regular',Georgia,serif;
+  --sans:'MuseoSansCyrlW03-500',Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--cream);color:var(--muted);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+/* Kâğıt dokusu: tüm sayfayı illüstrasyonlarla aynı malzemeye oturtan %2.8 grain */
+body::before{
+  content:"";position:fixed;inset:0;z-index:98;pointer-events:none;opacity:.028;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+/* Alacakaranlık geçişi: yeniden renklenen her şey yumuşak dönsün */
+body,.hdr__logo img,.hero__eyebrow,.hero__h1 .l1,.hero__h1 .l2,.hero__h1 .l3,.hero__tag,
+.gate__loc,.gate__name,.gate__desc,.gate__cta,.award,.rating,.trust__inner,.foot{
+  transition:background-color .8s ease,color .8s ease,border-color .8s ease,filter .8s ease;
+}
+a{color:inherit;}
+img{max-width:100%;display:block;}
+
+/* Cross-fade dil değişimi */
+.i18n{transition:opacity .25s ease;}
+body.lang-fade .i18n{opacity:0;}
+
+/* Skip link */
+.skip{
+  position:fixed;top:-60px;left:12px;z-index:200;background:var(--brown);color:#fff;
+  padding:10px 16px;border-radius:0 0 4px 4px;text-decoration:none;
+  font:600 12px/1 var(--sans);letter-spacing:.06em;transition:top .15s ease;
+}
+.skip:focus{top:0;}
+
+*:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:2px;}
+
+/* ---------- Header ---------- */
+.hdr{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  padding:22px clamp(18px,4vw,54px);max-width:1320px;margin:0 auto;width:100%;
+}
+.hdr__logo{display:inline-flex;align-items:center;text-decoration:none;}
+.hdr__logo img{height:56px;width:auto;}
+.hdr__right{display:flex;align-items:center;gap:16px;}
+
+/* Segmented EN|TR toggle (demo .ajwa-langtoggle deseni) */
+.langtoggle{
+  position:relative;display:inline-flex;align-items:stretch;
+  background:var(--beige);border:1px solid #ded0b8;border-radius:999px;padding:4px;
+  box-shadow:0 2px 10px rgba(56,43,37,.14);
+}
+.langtoggle button{
+  position:relative;z-index:2;flex:1 1 0;min-width:52px;border:0;background:none;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;padding:8px 16px;border-radius:999px;
+  font-family:var(--sans);font-weight:500;font-size:12px;line-height:1;letter-spacing:.16em;
+  color:#6b5d51;transition:color .28s ease;
+}
+.langtoggle button.active{color:#fff;}
+.langtoggle__thumb{
+  position:absolute;z-index:1;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);
+  border-radius:999px;background:var(--brown);box-shadow:0 2px 8px rgba(56,43,37,.32);
+  transition:left .3s cubic-bezier(.4,0,.2,1);
+}
+.langtoggle[data-active="tr"] .langtoggle__thumb{left:50%;}
+
+/* Hızlı iletişim (tel + WhatsApp) */
+.quick{display:inline-flex;gap:10px;}
+.quick a{
+  display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;
+  background:var(--brown);color:#fff;text-decoration:none;
+  box-shadow:0 2px 8px rgba(0,0,0,.24);transition:transform .15s ease;
+}
+.quick a:hover{transform:translateY(-2px);}
+/* WA yeşili sade kâğıt zeminde bağırıyor: varsayılan kahve, hover'da markasına döner */
+.quick a.wa:hover{background:#25d366;}
+.quick svg{width:21px;height:21px;fill:#fff;}
+
+/* Fener: alacakaranlık anahtarı */
+.lantern{
+  display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;
+  background:var(--beige);border:1px solid #ded0b8;color:#6b5d51;cursor:pointer;
+  box-shadow:0 2px 10px rgba(56,43,37,.14);
+  transition:transform .15s ease,background-color .5s ease,color .5s ease,border-color .5s ease,box-shadow .5s ease;
+}
+.lantern:hover{transform:translateY(-2px);}
+.lantern svg{width:20px;height:20px;}
+
+/* ---------- Hero bandı ---------- */
+.hero{text-align:center;padding:clamp(30px,6vw,64px) 22px clamp(20px,3vw,34px);}
+.hero__eyebrow{
+  font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-ink);
+  margin:0 0 18px;font-family:var(--sans);
+}
+.hero__h1{margin:0 auto;}
+.hero__h1 .l1{
+  display:block;font-family:var(--serif);font-weight:400;text-wrap:balance;
+  font-size:clamp(32px,6vw,66px);color:var(--ink);letter-spacing:.005em;line-height:1.04;
+}
+.hero__h1 .l2{
+  display:block;font-family:var(--ital);font-style:italic;color:#a2968a;
+  font-size:clamp(15px,2vw,23px);margin:10px 0 4px;letter-spacing:.03em;
+}
+.hero__h1 .l3{
+  display:block;font-family:var(--serif);font-weight:400;text-wrap:balance;
+  font-size:clamp(24px,4.4vw,50px);color:var(--brown-warm);letter-spacing:.02em;line-height:1.06;
+}
+.hero__tag{
+  color:var(--muted);font-size:clamp(14px,1.6vw,17px);text-wrap:pretty;
+  margin:22px auto 0;max-width:54ch;line-height:1.6;font-family:var(--serif);
+}
+
+/* Hero–triptik geçişi: hairline + tek altın nişan */
+.rule{display:flex;align-items:center;max-width:520px;margin:0 auto;padding:6px 22px 0;}
+.rule::before,.rule::after{content:"";flex:1;height:1px;background:#e2d6c3;transition:background-color .8s ease;}
+.rule span{width:8px;height:8px;border-radius:50%;background:var(--gold);margin:0 16px;flex:none;}
+
+/* ---------- Üç Kapı triptiği ---------- */
+.triptych{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,40px);
+  max-width:1320px;margin:0 auto;padding:clamp(24px,4vw,52px) clamp(18px,4vw,54px) clamp(22px,3vw,38px);
+}
+.gate{
+  text-decoration:none;color:inherit;display:flex;flex-direction:column;
+  outline-offset:6px;transition:opacity .45s ease;
+}
+/* Işığı yanan kapı sahnenin tek öznesi: diğer levhalar soluklaşır (.ajwa-acc has-active dili) */
+.triptych:has(.gate:focus-visible) .gate:not(:focus-visible){opacity:.42;}
+@media (hover:hover){
+  .triptych:has(.gate:hover) .gate:not(:hover){opacity:.42;}
+}
+/* Gravür levha — dış kenarlar sert gölge yerine sıcak, tüylenmiş hâleyle sayfaya erir */
+.gate__plate{
+  position:relative;aspect-ratio:1086/1448;overflow:hidden;
+  background:#e3d5c4;border:1px solid rgba(205,185,143,.65);
+  box-shadow:
+    0 2px 10px rgba(56,43,37,.07),
+    0 16px 44px -14px rgba(124,90,47,.16),
+    0 0 60px 22px rgba(230,216,196,.5);
+  transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s ease,border-color .8s ease;
+}
+.gate__plate::after{ /* içeriden ikinci ince çizgi (demo .ajwa-renewal::before deseni) */
+  content:"";position:absolute;inset:11px;border:1px solid rgba(216,196,158,.85);
+  pointer-events:none;z-index:3;transition:border-color .5s ease;
+}
+.gate__img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+}
+.gate__img--on{opacity:0;transition:opacity .7s ease;z-index:2;}
+.gate__glow{ /* ışık yanınca sıcak hale */
+  position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;
+  background:radial-gradient(120% 90% at 50% 62%,rgba(255,214,140,.32),transparent 62%);
+  transition:opacity .7s ease;
+}
+/* Işık AÇIK durumu (hover / focus / lit sınıfı) */
+.gate:hover .gate__img--on,
+.gate:focus-visible .gate__img--on,
+.gate.is-lit .gate__img--on{opacity:1;}
+.gate:hover .gate__glow,
+.gate:focus-visible .gate__glow,
+.gate.is-lit .gate__glow{opacity:1;}
+.gate:hover .gate__plate,
+.gate:focus-visible .gate__plate,
+.gate.is-lit .gate__plate{
+  transform:translateY(-5px);
+  box-shadow:0 14px 50px rgba(197,164,119,.45),0 0 60px 22px rgba(230,216,196,.5);
+}
+.gate:hover .gate__plate::after,
+.gate:focus-visible .gate__plate::after,
+.gate.is-lit .gate__plate::after{border-color:rgba(230,200,150,.95);}
+
+/* Levha altı metin bloğu */
+.gate__body{padding:22px 6px 4px;text-align:center;}
+.gate__loc{
+  display:block;font-family:var(--sans);font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--gold-ink);margin:0 0 10px;
+}
+.gate__name{
+  font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.4vw,32px);
+  color:var(--brown);margin:0;line-height:1.1;position:relative;display:inline-block;padding-bottom:12px;
+}
+.gate__name::after{
+  content:"";position:absolute;left:50%;bottom:0;width:0;height:2px;background:var(--gold);
+  transform:translateX(-50%);transition:width .45s cubic-bezier(.2,.7,.2,1);
+}
+.gate:hover .gate__name::after,
+.gate:focus-visible .gate__name::after,
+.gate.is-lit .gate__name::after{width:72%;}
+/* Levha altı el yazısı not: italik dizim (gravür altyazısı) */
+.gate__desc{
+  display:block;font-family:var(--serif);font-style:italic;color:var(--muted);
+  font-size:15.5px;line-height:1.6;margin:12px auto 0;max-width:34ch;
+}
+.gate__cta{
+  display:inline-block;margin-top:16px;font-family:var(--sans);font-size:12px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--gold-ink);
+}
+.gate__cta .arrow{display:inline-block;transition:transform .35s ease;}
+.gate:hover .gate__cta .arrow,
+.gate:focus-visible .gate__cta .arrow{transform:translateX(6px);}
+
+/* ---------- Güven bandı (iki hairline arasında) + BOOK ---------- */
+.trust{padding:0 clamp(18px,4vw,54px) clamp(40px,6vw,72px);}
+.trust__inner{
+  max-width:1320px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:16px 28px;border-top:1px solid #e2d6c3;border-bottom:1px solid #e2d6c3;padding:20px 12px;
+}
+.btn-gold{
+  display:inline-flex;align-items:center;gap:9px;font-family:var(--sans);font-size:13px;
+  letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+  padding:13px 24px;border-radius:2px;text-decoration:none;
+  background:var(--gold);color:#2a2018;box-shadow:0 4px 14px rgba(197,164,119,.4);
+  transition:transform .15s ease,box-shadow .15s ease;
+}
+.btn-gold:hover{transform:translateY(-2px);}
+.rating{display:inline-flex;align-items:center;gap:9px;font-size:15px;color:var(--brown);font-family:var(--sans);}
+.rating .stars{color:var(--gold);letter-spacing:2px;font-size:18px;}
+.rating b{font-size:18px;font-family:var(--serif);}
+.rating span{color:#9a8f84;font-size:12px;letter-spacing:.04em;}
+.awards{display:inline-flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px 26px;}
+.award-logo{height:44px;width:auto;opacity:.92;filter:saturate(.85);transition:filter .8s ease,opacity .8s ease;}
+.award-logo--seal{height:52px;}
+
+/* ---------- Harita: Boğaz'dan peribacalarına ---------- */
+.mapsec{padding:clamp(30px,4vw,52px) clamp(18px,4vw,54px) clamp(46px,6vw,84px);text-align:center;}
+.mapsec__eyebrow{
+  font-family:var(--sans);font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--gold-ink);margin:0 0 6px;transition:color .8s ease;
+}
+/* zemin dikdörtgeni temizlenmiş kopya (anasayfa/img) şeffaf; sepia grileri paletle ısıtır */
+.mapsec__img{
+  max-width:880px;width:100%;height:auto;margin:0 auto;display:block;
+  filter:sepia(.18);transition:filter .8s ease,opacity .8s ease;
+}
+
+/* ---------- Footer ---------- */
+.foot{background:var(--brown);color:#e8ddce;border-top:3px solid var(--gold);}
+.foot__col + .foot__col{border-left:1px solid rgba(255,255,255,.14);padding-left:clamp(28px,5vw,72px);}
+.foot__inner{
+  max-width:1320px;margin:0 auto;padding:clamp(40px,5vw,64px) clamp(18px,4vw,54px);
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);
+}
+.foot__col h3{
+  font-family:var(--serif);font-weight:400;font-size:22px;color:#fff;margin:0 0 14px;letter-spacing:.01em;
+}
+.foot__col p{margin:0 0 8px;font-size:14px;line-height:1.65;color:#c9bba8;font-family:var(--sans);}
+.foot__col a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(197,164,119,.35);}
+.foot__col a:hover{color:#e6c896;}
+.foot__bar{
+  border-top:1px solid rgba(255,255,255,.12);
+  padding:20px clamp(18px,4vw,54px);text-align:center;
+  font-size:12px;letter-spacing:.06em;color:#a99a86;font-family:var(--sans);
+}
+
+/* Demo rozeti (demolardaki zengin biçim: gerçek siteye link) */
+.demo-badge{
+  position:fixed;right:14px;bottom:14px;z-index:150;
+  background:rgba(56,43,37,.94);color:#f6f1e9;
+  padding:8px 14px;border-radius:999px;
+  font:600 11px/1 var(--sans);letter-spacing:.08em;
+  box-shadow:0 3px 12px rgba(0,0,0,.3);
+}
+.demo-badge a{color:var(--gold);text-decoration:underline;text-underline-offset:2px;}
+.demo-badge a:hover{color:#e6c896;}
+
+/* ---------- Alacakaranlık (dusk): fener söndürülünce sayfa geceye döner ---------- */
+body.dusk{background:#241a13;color:#b7a894;}
+body.dusk .hdr__logo img{filter:brightness(0) invert(.92) sepia(.14);}
+body.dusk .hero__eyebrow{color:#c8a266;}
+body.dusk .hero__h1 .l1{color:#f2e9da;}
+body.dusk .hero__h1 .l2{color:#8d7f6f;}
+body.dusk .hero__h1 .l3{color:var(--gold);}
+body.dusk .hero__tag{color:#b7a894;}
+body.dusk .rule::before,body.dusk .rule::after{background:#4a3a2c;}
+body.dusk .langtoggle{background:#31251c;border-color:#4a3a2c;box-shadow:none;}
+body.dusk .langtoggle button{color:#b7a894;}
+body.dusk .langtoggle button.active{color:#241a13;}
+body.dusk .langtoggle__thumb{background:var(--gold);}
+body.dusk .quick a{background:#4a3a2c;}
+body.dusk .lantern{background:var(--gold);border-color:var(--gold);color:#241a13;box-shadow:0 2px 16px rgba(197,164,119,.5);}
+/* Gecede tüm kapıların ışıkları yanar; levhalar karanlık galeride aydınlatılmış gravürler */
+body.dusk .gate__img--on,body.dusk .gate__glow{opacity:1;}
+body.dusk .gate__plate{
+  border-color:#6b5233;
+  box-shadow:0 10px 44px rgba(0,0,0,.55),0 0 70px rgba(255,196,110,.10);
+}
+body.dusk .gate__plate::after{border-color:rgba(230,200,150,.5);}
+body.dusk .gate__loc,body.dusk .gate__cta{color:var(--gold);}
+body.dusk .gate__name{color:#f2e9da;}
+body.dusk .gate__desc{color:#b7a894;}
+body.dusk .trust__inner{border-color:#4a3a2c;}
+body.dusk .rating{color:#e8ddce;}
+body.dusk .rating span{color:#9a8a76;}
+/* Gecede tek renkli logolar ve harita krem gravür silüetine döner;
+   Michelin mührü (beyaz zemin + kırmızı rozet) koyu zeminde orijinal haliyle kalır */
+body.dusk .award-logo{filter:brightness(0) invert(.86) sepia(.18);opacity:.9;}
+body.dusk .award-logo--seal{filter:none;opacity:.96;}
+body.dusk .mapsec__eyebrow{color:#c8a266;}
+body.dusk .mapsec__img{filter:brightness(0) invert(.85) sepia(.25);opacity:.92;}
+body.dusk .foot{background:#1c130d;}
+body.dusk .skip{background:var(--gold);color:#241a13;}
+
+/* ---------- Responsive ---------- */
+@media (max-width:900px){
+  .triptych{grid-template-columns:1fr;gap:34px;max-width:560px;}
+  .foot__inner{grid-template-columns:1fr;}
+  .foot__col + .foot__col{border-left:0;padding-left:0;border-top:1px solid rgba(255,255,255,.14);padding-top:26px;}
+}
+@media (max-width:520px){
+  .hdr{flex-wrap:wrap;gap:14px;}
+  .hdr__logo img{height:46px;}
+}
+
+/* Açılış "lamplighter" animasyonu (JS is-flash sınıfını basar) */
+.gate.is-flash .gate__img--on,
+.gate.is-flash .gate__glow{opacity:1;}
+.gate.is-flash .gate__plate{box-shadow:0 14px 50px rgba(197,164,119,.45);}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important;animation:none !important;scroll-behavior:auto !important;}
+}
+</style>
+</head>
+<body data-lang="en">
+
+<a class="skip i18n" href="#gates" data-i18n="skip">Skip to hotels</a>
+
+<!-- ===== Header ===== -->
+<header class="hdr">
+  <a class="hdr__logo" href="./index.html" aria-label="AJWA Hotels">
+    <img src="../assets/img/ajwa-hotels-logo.32d5ca4555.svg" alt="AJWA Hotels" width="95" height="120">
+  </a>
+  <div class="hdr__right">
+    <button type="button" class="lantern" id="lantern" aria-pressed="false"
+            title="Lights out — see the hotels at night" aria-label="Lights out — see the hotels at night">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9.5 2.5h5"/>
+          <path d="M10.2 2.5 8.8 5.5h6.4L13.8 2.5z"/>
+          <rect x="8.2" y="5.5" width="7.6" height="12.5" rx="1.5"/>
+          <path d="M10 21.5h4M12 18v3.5"/>
+        </g>
+        <path fill="currentColor" d="M12 9.2c1.3 1.5 2 2.6 2 3.7a2 2 0 1 1-4 0c0-1.1.7-2.2 2-3.7z"/>
+      </svg>
+    </button>
+    <div class="langtoggle" data-active="en" role="group" aria-label="Language / Dil">
+      <span class="langtoggle__thumb" aria-hidden="true"></span>
+      <button type="button" data-lang="en" class="active" aria-pressed="true">EN</button>
+      <button type="button" data-lang="tr" aria-pressed="false">TR</button>
+    </div>
+    <div class="quick">
+      <a href="tel:+902126382200" aria-label="Call AJWA" title="+90 212 638 22 00">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z"/></svg>
+      </a>
+      <a class="wa" href="https://wa.me/902126382200" target="_blank" rel="noopener" aria-label="WhatsApp AJWA">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1012 2zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.4.7-.4h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.4.6c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.6 1.6.3.1.5.1.7-.1l.7-.9c.2-.3.4-.2.7-.1l2 .9c.3.1.5.2.5.4.1.2.1.8-.1 1.5z"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <p class="hero__eyebrow i18n" data-i18n="eyebrow">Artisanal Luxury · Istanbul &amp; Cappadocia</p>
+  <h1 class="hero__h1">
+    <span class="l1 i18n" data-i18n="h1a">Artisanal Luxury Hotels</span>
+    <span class="l2 i18n" data-i18n="h1b">in</span>
+    <span class="l3 i18n" data-i18n="h1c">Istanbul &amp; Cappadocia</span>
+  </h1>
+  <p class="hero__tag i18n" data-i18n="tag">Two extraordinary landscapes, one signature of elegance: AJWA.</p>
+</section>
+
+<div class="rule" aria-hidden="true"><span></span></div>
+
+<!-- ===== Üç Kapı ===== -->
+<main id="gates" class="triptych">
+
+  <a class="gate" data-slug="sa" href="../sultanahmet/index.html"
+     data-href-en="../sultanahmet/index.html" data-href-tr="../sultanahmet/anasayfa.html"
+     aria-label="AJWA Sultanahmet — Historic Istanbul">
+    <span class="gate__plate">
+      <img class="gate__img gate__img--off" src="img/sa-off-1086.webp"
+           srcset="img/sa-off-640.webp 640w, img/sa-off-1086.webp 1086w"
+           sizes="(max-width:900px) 90vw, 30vw" alt="AJWA Sultanahmet — ornate entrance portal, ink illustration" width="1086" height="1448">
+      <img class="gate__img gate__img--on" src="img/sa-on-1086.webp"
+           srcset="img/sa-on-640.webp 640w, img/sa-on-1086.webp 1086w"
+           sizes="(max-width:900px) 90vw, 30vw" alt="" aria-hidden="true" width="1086" height="1448">
+      <span class="gate__glow" aria-hidden="true"></span>
+    </span>
+    <span class="gate__body">
+      <span class="gate__loc i18n" data-i18n="sa_loc">Plate I &middot; Historic Istanbul</span>
+      <span class="gate__name">AJWA Sultanahmet</span>
+      <span class="gate__desc i18n" data-i18n="sa_desc">In the heart of the old city, steps from Hagia Sophia and the Blue Mosque.</span>
+      <span class="gate__cta i18n" data-i18n="discover">Discover <span class="arrow">&rarr;</span></span>
+    </span>
+  </a>
+
+  <a class="gate" data-slug="ca" href="../cappadocia/index.html"
+     data-href-en="../cappadocia/index.html" data-href-tr="../cappadocia/anasayfa.html"
+     aria-label="AJWA Cappadocia — Cave-suite luxury">
+    <span class="gate__plate">
+      <img class="gate__img gate__img--off" src="img/ca-off-1086.webp"
+           srcset="img/ca-off-640.webp 640w, img/ca-off-1086.webp 1086w"
+           sizes="(max-width:900px) 90vw, 30vw" alt="AJWA Cappadocia — Seljuk crown portal, ink illustration" width="1086" height="1448">
+      <img class="gate__img gate__img--on" src="img/ca-on-1086.webp"
+           srcset="img/ca-on-640.webp 640w, img/ca-on-1086.webp 1086w"
+           sizes="(max-width:900px) 90vw, 30vw" alt="" aria-hidden="true" width="1086" height="1448">
+      <span class="gate__glow" aria-hidden="true"></span>
+    </span>
+    <span class="gate__body">
+      <span class="gate__loc i18n" data-i18n="ca_loc">Plate II &middot; Cappadocia</span>
+      <span class="gate__name">AJWA Cappadocia</span>
+      <span class="gate__desc i18n" data-i18n="ca_desc">Hand-carved cave suites above the fairy chimneys.</span>
+      <span class="gate__cta i18n" data-i18n="discover">Discover <span class="arrow">&rarr;</span></span>
+    </span>
+  </a>
+
+  <a class="gate" data-slug="hom" href="../sultanahmet/ajwa-homes.html"
+     data-href-en="../sultanahmet/ajwa-homes.html" data-href-tr="../sultanahmet/ajwa-evleri.html"
+     aria-label="AJWA Homes — Serviced residences in Istanbul">
+    <span class="gate__plate">
+      <img class="gate__img gate__img--off" src="img/hom-off-1086.webp"
+           srcset="img/hom-off-640.webp 640w, img/hom-off-1086.webp 1086w"
+           sizes="(max-width:900px) 90vw, 30vw" alt="AJWA Homes — wooden Ottoman mansion on a cobbled street, ink illustration" width="1086" height="1448">
+      <img class="gate__img gate__img--on" src="img/hom-on-1086.webp"
+           srcset="img/hom-on-640.webp 640w, img/hom-on-1086.webp 1086w"
+           sizes="(max-width:900px) 90vw, 30vw" alt="" aria-hidden="true" width="1086" height="1448">
+      <span class="gate__glow" aria-hidden="true"></span>
+    </span>
+    <span class="gate__body">
+      <span class="gate__loc i18n" data-i18n="hom_loc">Plate III &middot; Serviced Residences</span>
+      <span class="gate__name">AJWA Homes</span>
+      <span class="gate__desc i18n" data-i18n="hom_desc">Spacious residences with the service of AJWA Sultanahmet.</span>
+      <span class="gate__cta i18n" data-i18n="discover">Discover <span class="arrow">&rarr;</span></span>
+    </span>
+  </a>
+
+</main>
+
+<!-- ===== Güven bandı + BOOK ===== -->
+<section class="trust">
+  <div class="trust__inner">
+    <span class="rating">
+      <span class="stars" aria-hidden="true">&#9733;</span>
+      <b>4.8</b>
+      <span class="i18n" data-i18n="rating">guest rating</span>
+    </span>
+    <span class="awards">
+      <img class="award-logo award-logo--seal" src="../assets/img/michelin.6f0341471a.svg" alt="Michelin Guide" width="100" height="100" loading="lazy">
+      <img class="award-logo" src="../assets/img/PreferredLVX.dbf664f1b3.svg" alt="Preferred Hotels &amp; Resorts — LVX Collection" width="150" height="100" loading="lazy">
+      <img class="award-logo" src="../assets/img/PreferredLegend.03cfb56059.svg" alt="Preferred Hotels &amp; Resorts — Legend Collection" width="150" height="100" loading="lazy">
+      <img class="award-logo" src="../assets/img/fineHotels.031e25f88e.svg" alt="American Express Fine Hotels + Resorts" width="150" height="100" loading="lazy">
+    </span>
+    <a class="btn-gold i18n" data-i18n="book" href="https://www.ajwa.com.tr/" target="_blank" rel="noopener">Book Your Stay</a>
+  </div>
+</section>
+
+<!-- ===== Harita ===== -->
+<section class="mapsec">
+  <p class="mapsec__eyebrow i18n" data-i18n="map_eyebrow">From the Bosphorus to the fairy chimneys</p>
+  <img id="map" class="mapsec__img" src="img/turkey-map-en.svg"
+       alt="Map of T&uuml;rkiye — AJWA Sultanahmet in Istanbul, AJWA Cappadocia in Cappadocia"
+       width="1052" height="820" loading="lazy">
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="foot">
+  <div class="foot__inner">
+    <div class="foot__col">
+      <h3>AJWA Sultanahmet</h3>
+      <p>Piyerloti Caddesi No:30, Sultanahmet,<br>34126 İstanbul &mdash; Türkiye</p>
+      <p><a href="tel:+902126382200">+90 212 638 22 00</a></p>
+    </div>
+    <div class="foot__col">
+      <h3>AJWA Cappadocia</h3>
+      <p>Mustafapaşa Köyü, Yeni Mahalle,<br>Ürgüp Caddesi No:13, 50420 Nevşehir &mdash; Türkiye</p>
+      <p><a href="tel:+903843521212">+90 384 352 12 12</a></p>
+    </div>
+  </div>
+  <div class="foot__bar i18n" data-i18n="copyright">
+    © <span id="year">2026</span> AJWA Hotels · Artisanal Luxury in Istanbul &amp; Cappadocia
+  </div>
+</footer>
+
+<span class="demo-badge">TASLAK DEMO &middot; <a href="https://www.ajwa.com.tr" target="_blank" rel="noopener">ger&ccedil;ek site: www.ajwa.com.tr</a></span>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- i18n sözlüğü ---------- */
+  var I18N = {
+    en: {
+      skip:"Skip to hotels",
+      eyebrow:"Artisanal Luxury · Istanbul & Cappadocia",
+      h1a:"Artisanal Luxury Hotels", h1b:"in", h1c:"Istanbul & Cappadocia",
+      tag:"Two extraordinary landscapes, one signature of elegance: AJWA.",
+      sa_loc:"Plate I · Historic Istanbul",
+      sa_desc:"In the heart of the old city, steps from Hagia Sophia and the Blue Mosque.",
+      ca_loc:"Plate II · Cappadocia",
+      ca_desc:"Hand-carved cave suites above the fairy chimneys.",
+      hom_loc:"Plate III · Serviced Residences",
+      hom_desc:"Spacious residences with the service of AJWA Sultanahmet.",
+      discover:'Discover <span class="arrow">&rarr;</span>',
+      rating:"guest rating",
+      book:"Book Your Stay",
+      map_eyebrow:"From the Bosphorus to the fairy chimneys",
+      map_alt:"Map of Türkiye — AJWA Sultanahmet in Istanbul, AJWA Cappadocia in Cappadocia",
+      lantern_out:"Lights out — see the hotels at night",
+      lantern_on:"Lights on — back to daylight",
+      copyright:'© <span id="year"></span> AJWA Hotels · Artisanal Luxury in Istanbul & Cappadocia',
+      title:"Luxury Hotels in Istanbul and Cappadocia | AJWA Hotels"
+    },
+    tr: {
+      skip:"Otellere geç",
+      eyebrow:"Sanatsal Lüks · İstanbul & Kapadokya",
+      h1a:"Sanatsal Lüks Oteller", h1b:"·", h1c:"İstanbul & Kapadokya",
+      tag:"İki benzersiz coğrafya, tek bir zarafet imzası: AJWA.",
+      sa_loc:"Levha I · Tarihi İstanbul",
+      sa_desc:"Tarihi yarımadanın kalbinde, Ayasofya ve Sultanahmet Camii'ne birkaç adım.",
+      ca_loc:"Levha II · Kapadokya",
+      ca_desc:"Peribacalarının üzerinde el oyması mağara süitler.",
+      hom_loc:"Levha III · Servisli Rezidanslar",
+      hom_desc:"AJWA Sultanahmet hizmetiyle geniş rezidanslar.",
+      discover:'Keşfet <span class="arrow">&rarr;</span>',
+      rating:"misafir puanı",
+      book:"Rezervasyon",
+      map_eyebrow:"Boğaz'dan peribacalarına",
+      map_alt:"Türkiye haritası — İstanbul'da AJWA Sultanahmet, Kapadokya'da AJWA Cappadocia",
+      lantern_out:"Işıkları söndür — otelleri gece görün",
+      lantern_on:"Işıkları aç — gündüze dön",
+      copyright:'© <span id="year"></span> AJWA Otelleri · İstanbul ve Kapadokya\'da Sanatsal Lüks',
+      title:"İstanbul ve Kapadokya'da Lüks Oteller | AJWA Otelleri"
+    }
+  };
+
+  var body = document.body;
+  var htmlTag = document.getElementById("HtmlTag");
+  var toggle = document.querySelector(".langtoggle");
+  var lantern = document.getElementById("lantern");
+  var gates = Array.prototype.slice.call(document.querySelectorAll(".gate"));
+  var YEAR = new Date().getFullYear();
+
+  /* Alacakaranlık başlangıç durumu: ?dusk=1 > localStorage */
+  (function initDusk(){
+    var q = new URLSearchParams(location.search).get("dusk");
+    var saved; try{ saved = localStorage.getItem("ajwa-dusk"); }catch(e){}
+    if(q === "1" || (q === null && saved === "1")) body.classList.add("dusk");
+  })();
+
+  function updateLantern(){
+    var lang = body.getAttribute("data-lang") || "en";
+    var dict = I18N[lang] || I18N.en;
+    var dusk = body.classList.contains("dusk");
+    var label = dusk ? dict.lantern_on : dict.lantern_out;
+    lantern.setAttribute("title", label);
+    lantern.setAttribute("aria-label", label);
+    lantern.setAttribute("aria-pressed", dusk ? "true" : "false");
+  }
+
+  lantern.addEventListener("click", function(){
+    body.classList.toggle("dusk");
+    try{ localStorage.setItem("ajwa-dusk", body.classList.contains("dusk") ? "1" : "0"); }catch(e){}
+    updateLantern();
+  });
+
+  function apply(lang, animate){
+    var dict = I18N[lang] || I18N.en;
+    var doWrite = function(){
+      document.querySelectorAll("[data-i18n]").forEach(function(el){
+        var key = el.getAttribute("data-i18n");
+        if(dict[key] != null) el.innerHTML = dict[key];
+      });
+      // yıl'ı yeniden yaz (copyright innerHTML sıfırlıyor)
+      var y = document.getElementById("year"); if(y) y.textContent = YEAR;
+      // dile göre link + <html lang> + title
+      gates.forEach(function(g){
+        var href = g.getAttribute("data-href-" + lang);
+        if(href) g.setAttribute("href", href);
+      });
+      // harita dil varyantı
+      var map = document.getElementById("map");
+      if(map){
+        map.src = "img/turkey-map-" + lang + ".svg";
+        map.alt = dict.map_alt;
+      }
+      body.setAttribute("data-lang", lang);
+      if(htmlTag) htmlTag.setAttribute("lang", lang);
+      document.documentElement.setAttribute("lang", lang);
+      document.title = dict.title;
+      // toggle görsel durumu
+      toggle.setAttribute("data-active", lang);
+      toggle.querySelectorAll("button").forEach(function(b){
+        var on = b.getAttribute("data-lang") === lang;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      try{ localStorage.setItem("ajwa-lang", lang); }catch(e){}
+      updateLantern();
+    };
+
+    if(animate && !prefersReduced()){
+      body.classList.add("lang-fade");
+      setTimeout(function(){ doWrite(); body.classList.remove("lang-fade"); }, 250);
+    } else {
+      doWrite();
+    }
+  }
+
+  function prefersReduced(){
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  /* Toggle tıklaması */
+  toggle.addEventListener("click", function(e){
+    var btn = e.target.closest("button[data-lang]");
+    if(!btn) return;
+    var lang = btn.getAttribute("data-lang");
+    if(lang === body.getAttribute("data-lang")) return;
+    apply(lang, true);
+  });
+
+  /* Başlangıç dili: ?lang=tr > localStorage > en */
+  (function initLang(){
+    var params = new URLSearchParams(location.search);
+    var q = params.get("lang");
+    var saved; try{ saved = localStorage.getItem("ajwa-lang"); }catch(e){}
+    var lang = (q === "tr" || q === "en") ? q : (saved === "tr" || saved === "en" ? saved : "en");
+    apply(lang, false);
+  })();
+
+  /* ---------- Işık ısıtma: on-görselleri window.load sonrası prefetch ---------- */
+  window.addEventListener("load", function(){
+    ["img/sa-on-1086.webp","img/ca-on-1086.webp","img/hom-on-1086.webp",
+     "img/sa-on-640.webp","img/ca-on-640.webp","img/hom-on-640.webp"].forEach(function(src){
+      var im = new Image(); im.src = src;
+    });
+
+    /* ---------- Açılış "lamplighter": SA→CA→HOM sırayla yan/sön (geceyse zaten yanık) ---------- */
+    if(!prefersReduced() && !body.classList.contains("dusk")){
+      gates.forEach(function(g, i){
+        var on = 500 + i * 620;
+        setTimeout(function(){ g.classList.add("is-flash"); }, on);
+        setTimeout(function(){ g.classList.remove("is-flash"); }, on + 900);
+      });
+    }
+  });
+
+  /* ---------- Mobil/dokunmatik: viewport'ta görününce ışık yak ---------- */
+  var canHover = window.matchMedia && window.matchMedia("(hover: hover)").matches;
+  if(!canHover && "IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        en.target.classList.toggle("is-lit", en.isIntersecting && en.intersectionRatio >= 0.6);
+      });
+    }, { threshold:[0,0.6,1] });
+    gates.forEach(function(g){ io.observe(g); });
+  }
+})();
+</script>
+</body>
+</html>

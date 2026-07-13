@@ -8,7 +8,16 @@
 <meta name="theme-color" content="#382B25">
 <title>Luxury Hotels in Istanbul and Cappadocia | AJWA Hotels</title>
 <link rel="shortcut icon" href="../assets/img/favicon.ico">
-<script>document.documentElement.classList.add("js");</script>
+<script>
+(function(){
+  var d = document.documentElement;
+  d.classList.add("js");
+  /* Açılış "mürekkep" sekansı: reduced-motion yoksa başlat (animasyonlar CSS'te kendi kendine biter) */
+  try{
+    if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches) d.classList.add("intro");
+  }catch(e){}
+})();
+</script>
 
 <!-- Off-state illustrations preloaded; on-states prefetched after load so lights never flash -->
 <link rel="preload" as="image" href="img/sa-off-1086.webp" type="image/webp">
@@ -316,7 +325,7 @@ body.lang-fade .i18n{opacity:0;}
 .plate-sec__body{margin:0;font-size:15px;line-height:1.8;color:var(--muted);}
 .facts{
   display:grid;grid-template-columns:1fr 1fr;gap:18px 26px;
-  margin:26px 0 30px;padding-top:22px;border-top:1px solid var(--hairline);
+  margin:26px 0 24px;padding-top:22px;border-top:1px solid var(--hairline);
 }
 .fact b{
   display:block;font-family:var(--serif);font-weight:400;font-size:21px;
@@ -338,6 +347,27 @@ body.lang-fade .i18n{opacity:0;}
 .cta-line:hover::after,.cta-line:focus-visible::after{width:100%;}
 .cta-line .arrow{display:inline-block;transition:transform .35s ease;}
 .cta-line:hover .arrow,.cta-line:focus-visible .arrow{transform:translateX(6px);}
+
+/* Gerçek fotoğraflar: gravür paspartulu küçük çift; hover'da sepya'dan gerçek renge döner */
+.snaps{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:0 0 30px;}
+.snap{margin:0;}
+.snap__frame{
+  display:block;position:relative;overflow:hidden;aspect-ratio:4/3;background:#e3d5c4;
+  border:1px solid rgba(205,185,143,.85);box-shadow:0 8px 24px rgba(56,43,37,.16);
+}
+.snap__frame::after{
+  content:"";position:absolute;inset:7px;border:1px solid rgba(216,196,158,.9);
+  pointer-events:none;z-index:2;
+}
+.snap img{
+  width:100%;height:100%;object-fit:cover;
+  filter:sepia(.22) saturate(.82) contrast(.98);transition:filter .6s ease;
+}
+.snap:hover img,.snap:focus-within img{filter:sepia(0) saturate(1) contrast(1);}
+.snap figcaption{
+  margin:8px 2px 0;font-family:var(--ital);font-style:italic;
+  font-size:12.5px;color:var(--muted);text-align:center;
+}
 
 /* Detay kartı: aynı gravürün büyütülmüş köşesi, ana levhanın üstüne taşar */
 .plate-sec__detail{
@@ -375,13 +405,25 @@ body.lang-fade .i18n{opacity:0;}
   width:100%;height:auto;display:block;
   filter:sepia(.18);transition:filter .8s ease,opacity .8s ease;
 }
-/* İşaret koordinatları SVG viewBox'ından (1052×820): İst (240.9,314.1) · Ürgüp (491.5,456.3) */
+/* İşaret koordinatları SVG viewBox'ından (1052×820): İst (240.9,314.1) · Ürgüp (491.5,456.3)
+   Noktalar tıklanabilir: ilgili Levha bölümüne kaydırır */
 .mapdot{
-  position:absolute;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;border-radius:50%;
-  background:var(--gold);box-shadow:0 0 0 3px rgba(197,164,119,.28);pointer-events:none;
+  position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;
+  background:var(--gold);box-shadow:0 0 0 3px rgba(197,164,119,.28);
+  cursor:pointer;transition:transform .25s ease,box-shadow .25s ease;
 }
+.mapdot::before{content:"";position:absolute;inset:-13px;border-radius:50%;} /* geniş dokunma alanı */
+.mapdot:hover,.mapdot:focus-visible{transform:scale(1.3);box-shadow:0 0 0 4px rgba(197,164,119,.42);}
 .mapdot--sa{left:22.9%;top:38.3%;}
 .mapdot--ca{left:46.7%;top:55.6%;}
+.mapdot__tip{
+  position:absolute;left:50%;bottom:calc(100% + 12px);transform:translateX(-50%);
+  white-space:nowrap;background:var(--brown);color:#f6f1e9;
+  font:500 10.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  padding:7px 11px;border-radius:2px;border:1px solid rgba(197,164,119,.4);
+  opacity:0;pointer-events:none;transition:opacity .25s ease;
+}
+.mapdot:hover .mapdot__tip,.mapdot:focus-visible .mapdot__tip{opacity:1;}
 .mapdot::after{
   content:"";position:absolute;inset:-7px;border-radius:50%;
   border:1.5px solid var(--gold);opacity:0;
@@ -450,6 +492,28 @@ body.lang-fade .i18n{opacity:0;}
 .js .rev{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease;}
 .js .rev.in{opacity:1;transform:translateY(0);}
 
+/* ---------- Açılış: mürekkep belirmesi ----------
+   head script html.intro basar; animasyonlar 'both' fill ile kendi kendine
+   oynar ve biter (ek sınıf/JS gerekmez — JS çökse bile sayfa görünür kalır).
+   JS ~3.7s sonra .intro'yu temizler. */
+@keyframes inkIn{from{opacity:0;filter:blur(7px);transform:translateY(12px);}to{opacity:1;filter:blur(0);transform:none;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes drawDown{from{clip-path:inset(0 0 100% 0);}to{clip-path:inset(0 0 0 0);}}
+@keyframes ruleGrow{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+@keyframes nibPop{from{opacity:0;transform:scale(.4);}to{opacity:1;transform:scale(1);}}
+html.intro .hero__eyebrow{animation:fadeUp .8s ease .1s both;}
+html.intro .hero__h1 .l1{animation:inkIn .9s ease .4s both;}
+html.intro .hero__h1 .l2{animation:inkIn .9s ease .8s both;}
+html.intro .hero__h1 .l3{animation:inkIn .9s ease 1s both;}
+html.intro .hero__tag{animation:fadeUp .8s ease 1.35s both;}
+html.intro .rule::before,html.intro .rule::after{animation:ruleGrow .9s cubic-bezier(.2,.7,.2,1) 1.5s both;}
+html.intro .rule span{animation:nibPop .5s ease 1.7s both;}
+html.intro .triptych .gate:nth-child(1) .plate{animation:drawDown 1.1s cubic-bezier(.4,0,.2,1) 1.6s both;}
+html.intro .triptych .gate:nth-child(2) .plate{animation:drawDown 1.1s cubic-bezier(.4,0,.2,1) 1.85s both;}
+html.intro .triptych .gate:nth-child(3) .plate{animation:drawDown 1.1s cubic-bezier(.4,0,.2,1) 2.1s both;}
+html.intro .gate__body{animation:fadeIn .8s ease 2.5s both;}
+
 /* ---------- Alacakaranlık (dusk): fener söndürülünce sayfa geceye döner ---------- */
 body.dusk{background:#241a13;color:#b7a894;}
 body.dusk .hdr-wrap{background:rgba(36,26,19,.9);}
@@ -491,6 +555,12 @@ body.dusk .fact span{color:#c8a266;}
 body.dusk .cta-line{color:var(--gold);}
 body.dusk .plate-detail{border-color:#6b5233;box-shadow:0 10px 30px rgba(0,0,0,.5);}
 body.dusk .plate-detail__cap{color:#b7a894;}
+body.dusk .snap__frame{border-color:#6b5233;box-shadow:0 8px 24px rgba(0,0,0,.5);}
+body.dusk .snap__frame::after{border-color:rgba(230,200,150,.5);}
+body.dusk .snap img{filter:sepia(.25) saturate(.7) brightness(.85);}
+body.dusk .snap:hover img,body.dusk .snap:focus-within img{filter:sepia(0) saturate(.95) brightness(.95);}
+body.dusk .snap figcaption{color:#b7a894;}
+body.dusk .mapdot__tip{border-color:rgba(197,164,119,.55);}
 body.dusk .trust__inner{border-color:#4a3a2c;}
 body.dusk .rating{color:#e8ddce;}
 body.dusk .rating span{color:#9a8a76;}
@@ -691,6 +761,16 @@ body.dusk .skip{background:var(--gold);color:#241a13;}
       <div class="fact"><b>Feijoa</b><span class="i18n" data-i18n="sa_f3">P&acirc;tisserie</span></div>
       <div class="fact"><b>Michelin</b><span class="i18n" data-i18n="sa_f4">Guide Selection</span></div>
     </div>
+    <div class="snaps">
+      <figure class="snap">
+        <span class="snap__frame"><img src="img/photo-sa-suite.webp" alt="Sultan Suite" loading="lazy" width="720" height="855"></span>
+        <figcaption class="i18n" data-i18n="sa_p1">Sultan Suite</figcaption>
+      </figure>
+      <figure class="snap">
+        <span class="snap__frame"><img src="img/photo-sa-feijoa.webp" alt="Feijoa P&acirc;tisserie" loading="lazy" width="720" height="855"></span>
+        <figcaption class="i18n" data-i18n="sa_p2">Feijoa P&acirc;tisserie</figcaption>
+      </figure>
+    </div>
     <a class="cta-line" href="../sultanahmet/index.html"
        data-href-en="../sultanahmet/index.html" data-href-tr="../sultanahmet/anasayfa.html">
       <span class="i18n" data-i18n="sa_cta">Explore the Hotel</span> <span class="arrow" aria-hidden="true">&rarr;</span>
@@ -732,6 +812,16 @@ body.dusk .skip{background:var(--gold);color:#241a13;}
       <div class="fact"><b>10</b><span class="i18n" data-i18n="ca_f2">Cave Suites</span></div>
       <div class="fact"><b>3</b><span class="i18n" data-i18n="ca_f3">Architectural Wings</span></div>
       <div class="fact"><b>Zeferan</b><span class="i18n" data-i18n="ca_f4">Cappadocia</span></div>
+    </div>
+    <div class="snaps">
+      <figure class="snap">
+        <span class="snap__frame"><img src="img/photo-ca-cave.webp" alt="K&#305;l&#305;&ccedil; Arslan Cave Suite" loading="lazy" width="720" height="855"></span>
+        <figcaption class="i18n" data-i18n="ca_p1">K&#305;l&#305;&ccedil; Arslan Cave Suite</figcaption>
+      </figure>
+      <figure class="snap">
+        <span class="snap__frame"><img src="img/photo-ca-terrace.webp" alt="Terrace over the fairy chimneys" loading="lazy" width="720" height="855"></span>
+        <figcaption class="i18n" data-i18n="ca_p2">Terrace over the fairy chimneys</figcaption>
+      </figure>
     </div>
     <a class="cta-line" href="../cappadocia/index.html"
        data-href-en="../cappadocia/index.html" data-href-tr="../cappadocia/anasayfa.html">
@@ -775,6 +865,16 @@ body.dusk .skip{background:var(--gold);color:#241a13;}
       <div class="fact"><b class="i18n" data-i18n="hom_f3v">Full Service</b><span class="i18n" data-i18n="hom_f3">by AJWA Sultanahmet</span></div>
       <div class="fact"><b class="i18n" data-i18n="hom_f4v">Short &amp; Long</b><span class="i18n" data-i18n="hom_f4">Stays</span></div>
     </div>
+    <div class="snaps">
+      <figure class="snap">
+        <span class="snap__frame"><img src="img/photo-hom-mansion.webp" alt="White Mansion" loading="lazy" width="720" height="855"></span>
+        <figcaption class="i18n" data-i18n="hom_p1">White Mansion</figcaption>
+      </figure>
+      <figure class="snap">
+        <span class="snap__frame"><img src="img/photo-hom-clock.webp" alt="The Clock House" loading="lazy" width="720" height="855"></span>
+        <figcaption class="i18n" data-i18n="hom_p2">The Clock House</figcaption>
+      </figure>
+    </div>
     <a class="cta-line" href="../sultanahmet/ajwa-homes.html"
        data-href-en="../sultanahmet/ajwa-homes.html" data-href-tr="../sultanahmet/ajwa-evleri.html">
       <span class="i18n" data-i18n="hom_cta">Explore the Homes</span> <span class="arrow" aria-hidden="true">&rarr;</span>
@@ -790,8 +890,12 @@ body.dusk .skip{background:var(--gold);color:#241a13;}
     <img id="map" class="mapsec__img" src="img/turkey-map-en.svg"
          alt="Map of T&uuml;rkiye — AJWA Sultanahmet in Istanbul, AJWA Cappadocia in Cappadocia"
          width="1052" height="820" loading="lazy">
-    <span class="mapdot mapdot--sa" aria-hidden="true"></span>
-    <span class="mapdot mapdot--ca" aria-hidden="true"></span>
+    <a class="mapdot mapdot--sa" href="#sultanahmet" aria-label="AJWA Sultanahmet — İstanbul">
+      <span class="mapdot__tip" aria-hidden="true">AJWA Sultanahmet</span>
+    </a>
+    <a class="mapdot mapdot--ca" href="#cappadocia" aria-label="AJWA Cappadocia — Ürgüp">
+      <span class="mapdot__tip" aria-hidden="true">AJWA Cappadocia</span>
+    </a>
   </div>
 </section>
 
@@ -858,11 +962,13 @@ body.dusk .skip{background:var(--gold);color:#241a13;}
       sa_body:"61 rooms and suites furnished with the grace of an Ottoman mansion; Azerbaijani cuisine at Zeferan Restaurant overlooking the Marmara, and Feijoa Pâtisserie in the lobby. Beyond five stars: serenity and gracious hospitality.",
       sa_f1:"Rooms & Suites", sa_f2:"Azerbaijani Cuisine", sa_f3:"Pâtisserie", sa_f4:"Guide Selection",
       sa_cta:"Explore the Hotel", sa_cap:"Portal detail",
+      sa_p1:"Sultan Suite", sa_p2:"Feijoa Pâtisserie",
       ca_no:"Plate II", ca_locline:"Mustafapaşa, Ürgüp",
       ca_lede:"In the shadow of the fairy chimneys, a destination unto itself.",
       ca_body:"98 rooms across three architectural wings; ten hand-carved cave suites, each bearing a name from Ottoman history. Zeferan Cappadocia welcomes guests in its own building on the sprawling grounds.",
       ca_f1:"Rooms", ca_f2:"Cave Suites", ca_f3:"Architectural Wings", ca_f4:"Cappadocia",
       ca_cta:"Explore the Hotel", ca_cap:"Muqarnas detail",
+      ca_p1:"Kılıç Arslan Cave Suite", ca_p2:"Terrace over the fairy chimneys",
       hom_no:"Plate III", hom_locline:"Old City, Istanbul",
       hom_lede:"Craft and art come together at AJWA Homes.",
       hom_body:"Meticulously renovated classical Turkish houses, fully serviced extensions of AJWA Sultanahmet for short and long stays: the four-bedroom White Mansion and the three-bedroom Clock House.",
@@ -870,6 +976,7 @@ body.dusk .skip{background:var(--gold);color:#241a13;}
       hom_f3v:"Full Service", hom_f3:"by AJWA Sultanahmet",
       hom_f4v:"Short & Long", hom_f4:"Stays",
       hom_cta:"Explore the Homes", hom_cap:"Bay window detail",
+      hom_p1:"White Mansion", hom_p2:"The Clock House",
       map_eyebrow:"Two Cities",
       map_title:"From the Bosphorus to the fairy chimneys",
       map_alt:"Map of Türkiye — AJWA Sultanahmet in Istanbul, AJWA Cappadocia in Cappadocia",
@@ -896,11 +1003,13 @@ body.dusk .skip{background:var(--gold);color:#241a13;}
       sa_body:"Bir Osmanlı konağı zarafetiyle döşenmiş 61 oda ve süit; Marmara'ya bakan Zeferan Restaurant'ta Azerbaycan mutfağı, lobide Feijoa Pâtisserie. Beş yıldızın ötesinde: sükûnet ve incelikli misafirperverlik.",
       sa_f1:"Oda & Süit", sa_f2:"Azerbaycan Mutfağı", sa_f3:"Pâtisserie", sa_f4:"Guide Seçkisi",
       sa_cta:"Oteli Keşfedin", sa_cap:"Taç kapı detayı",
+      sa_p1:"Sultan Süiti", sa_p2:"Feijoa Pâtisserie",
       ca_no:"Levha II", ca_locline:"Mustafapaşa, Ürgüp",
       ca_lede:"Peribacalarının gölgesinde, başlı başına bir destinasyon.",
       ca_body:"Üç mimari kanada yayılan 98 oda; her biri Osmanlı tarihinden bir ismi taşıyan 10 el oyması mağara süiti. Zeferan Cappadocia, arazinin içindeki kendi binasında konuklarını ağırlıyor.",
       ca_f1:"Oda", ca_f2:"Mağara Süiti", ca_f3:"Mimari Kanat", ca_f4:"Cappadocia",
       ca_cta:"Oteli Keşfedin", ca_cap:"Mukarnas detayı",
+      ca_p1:"Kılıç Arslan Mağara Süiti", ca_p2:"Peribacalarına bakan teras",
       hom_no:"Levha III", hom_locline:"Eski Şehir, İstanbul",
       hom_lede:"Zanaat ve sanat, AJWA Homes'ta buluşuyor.",
       hom_body:"Özenle yenilenen klasik Türk evleri, AJWA Sultanahmet'in tam servisli birer uzantısı olarak kısa ve uzun konaklamalara açılıyor: dört yatak odalı White Mansion ve üç yatak odalı The Clock House.",
@@ -908,6 +1017,7 @@ body.dusk .skip{background:var(--gold);color:#241a13;}
       hom_f3v:"Tam Servis", hom_f3:"AJWA Sultanahmet'ten",
       hom_f4v:"Kısa & Uzun", hom_f4:"Konaklama",
       hom_cta:"Evleri Keşfedin", hom_cap:"Cumba detayı",
+      hom_p1:"White Mansion", hom_p2:"The Clock House",
       map_eyebrow:"İki Şehir",
       map_title:"Boğaz'dan peribacalarına",
       map_alt:"Türkiye haritası — İstanbul'da AJWA Sultanahmet, Kapadokya'da AJWA Cappadocia",
@@ -1024,6 +1134,18 @@ body.dusk .skip{background:var(--gold);color:#241a13;}
   window.addEventListener("scroll", onScroll, { passive:true });
   onScroll();
 
+  /* ---------- Açılış "mürekkep" sekansı: CSS animasyonları kendi başına oynar;
+     burada yalnızca zamanı işaretle, scroll restorasyonunda atla, bitince temizle ---------- */
+  var htmlEl = document.documentElement;
+  var introAt = htmlEl.classList.contains("intro") ? Date.now() : 0;
+  if(introAt && window.scrollY > 80){
+    htmlEl.classList.remove("intro");
+    introAt = 0;
+  }
+  if(introAt){
+    setTimeout(function(){ htmlEl.classList.remove("intro"); }, 3700);
+  }
+
   /* ---------- Işık ısıtma: on-görselleri window.load sonrası prefetch ---------- */
   window.addEventListener("load", function(){
     ["img/sa-on-1086.webp","img/ca-on-1086.webp","img/hom-on-1086.webp",
@@ -1031,10 +1153,11 @@ body.dusk .skip{background:var(--gold);color:#241a13;}
       var im = new Image(); im.src = src;
     });
 
-    /* ---------- Açılış "lamplighter": SA→CA→HOM sırayla yan/sön (geceyse zaten yanık) ---------- */
+    /* ---------- "Lamplighter": SA→CA→HOM sırayla yan/sön (çizim bittikten sonra; geceyse zaten yanık) ---------- */
     if(!prefersReduced() && !body.classList.contains("dusk")){
+      var base = introAt ? Math.max(500, introAt + 3300 - Date.now()) : 500;
       gates.forEach(function(g, i){
-        var on = 500 + i * 620;
+        var on = base + i * 620;
         setTimeout(function(){ g.classList.add("is-flash"); }, on);
         setTimeout(function(){ g.classList.remove("is-flash"); }, on + 900);
       });

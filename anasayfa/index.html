@@ -228,11 +228,6 @@ body.lang-fade .i18n{opacity:0;}
   text-decoration:none;color:inherit;display:flex;flex-direction:column;
   outline-offset:6px;transition:opacity .45s ease;
 }
-/* Işığı yanan kapı sahnenin tek öznesi: diğer levhalar soluklaşır */
-.triptych:has(.gate:focus-visible) .gate:not(:focus-visible){opacity:.42;}
-@media (hover:hover){
-  .triptych:has(.gate:hover) .gate:not(:hover){opacity:.42;}
-}
 .gate:hover .plate__img--on,
 .gate:focus-visible .plate__img--on,
 .gate.is-lit .plate__img--on{opacity:1;}
@@ -1125,6 +1120,8 @@ body.dusk .skip{background:var(--gold);color:#241a13;}
     document.querySelectorAll(".hero, #gates, .manifesto, .plate-sec, .trust"));
   var chapPlates = Array.prototype.slice.call(
     document.querySelectorAll(".plate-sec .plate"));
+  var snapFrames = Array.prototype.slice.call(
+    document.querySelectorAll(".snap__frame"));
   var fxOn = !prefersReduced();
   var fxTick = false;
 
@@ -1147,16 +1144,29 @@ body.dusk .skip{background:var(--gold);color:#241a13;}
       }
     });
 
-    /* Levha plakaları: görüntü içinde yavaş dikey süzülme (Ken Burns parallax) */
+    /* Levha plakaları: Ken Burns — görüntü ortaya gelirken yerleşir (zoom-out),
+       geçerken içeride dikey süzülür, çıkarken yeniden büyür */
     chapPlates.forEach(function(pl){
       var r = pl.getBoundingClientRect();
       if(r.bottom < 0 || r.top > vh) return;
       var n = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2); // -1..1
-      var y = (n * -26).toFixed(1);
+      if(n < -1) n = -1; else if(n > 1) n = 1;
+      var y = (n * -48).toFixed(1);
+      var s = (1.08 + Math.abs(n) * 0.08).toFixed(3);
       var imgs = pl.querySelectorAll(".plate__img");
       for(var i = 0; i < imgs.length; i++){
-        imgs[i].style.transform = "translateY(" + y + "px) scale(1.1)";
+        imgs[i].style.transform = "translateY(" + y + "px) scale(" + s + ")";
       }
+    });
+
+    /* Fotoğraf çiftleri: hafif süzülme */
+    snapFrames.forEach(function(fr){
+      var r = fr.getBoundingClientRect();
+      if(r.bottom < 0 || r.top > vh) return;
+      var n = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
+      if(n < -1) n = -1; else if(n > 1) n = 1;
+      var img = fr.querySelector("img");
+      if(img) img.style.transform = "translateY(" + (n * -14).toFixed(1) + "px) scale(1.1)";
     });
   }
   function onScrollFX(){
@@ -1165,6 +1175,8 @@ body.dusk .skip{background:var(--gold);color:#241a13;}
   window.addEventListener("scroll", onScrollFX, { passive:true });
   window.addEventListener("resize", onScrollFX, { passive:true });
   scrollFX();
+  /* hash ile açılışta fragment kaydırması script'ten sonra gerçekleşir: load'da bir kez daha senkron çalıştır */
+  window.addEventListener("load", function(){ scrollFX(); });
 
   /* ---------- Açılış "mürekkep" sekansı: CSS animasyonları kendi başına oynar;
      burada yalnızca zamanı işaretle, scroll restorasyonunda atla, bitince temizle ---------- */
